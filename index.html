@@ -6,100 +6,8 @@
     <title>Comal County GOP Watch</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
     <style>
-        :root {
-            --red: #8B1A1A;
-            --red-light: #B22234;
-            --navy: #1B2A4A;
-            --navy-light: #2C3E6B;
-            --cream: #FDF8F0;
-            --cream-dark: #F5EDE0;
-            --gold: #C5993A;
-            --gold-light: #D4AA4F;
-            --white: #FFFFFF;
-            --text: #1a1a1a;
-            --text-muted: #6B7280;
-            --border: #E5DDD0;
-            --success: #2D6A4F;
-            --warning: #B45309;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--cream);
-            color: var(--text);
-            line-height: 1.7;
-        }
-
-        h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
-
-        /* ── Navigation ── */
-        .top-bar {
-            background: var(--navy);
-            color: rgba(255,255,255,0.8);
-            font-size: 13px;
-            text-align: center;
-            padding: 8px 16px;
-            letter-spacing: 0.5px;
-        }
-
-        nav {
-            background: var(--white);
-            border-bottom: 3px solid var(--red);
-            padding: 0 24px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        nav .nav-inner {
-            max-width: 1240px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-        }
-
-        nav .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--navy);
-        }
-
-        nav .logo span { color: var(--red); }
-
-        nav .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        nav .nav-links a {
-            color: var(--navy);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: color 0.2s;
-        }
-
-        nav .nav-links a:hover { color: var(--red); }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--navy);
-            cursor: pointer;
-        }
-
         /* ── Hero ── */
         .hero {
             position: relative;
@@ -151,13 +59,6 @@
             opacity: 0.6;
         }
 
-        /* ── Container ── */
-        .container {
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
         /* ── Star Divider ── */
         .star-divider {
             text-align: center;
@@ -178,24 +79,7 @@
             margin: 0 16px;
         }
 
-        /* ── Section Headers ── */
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-header h2 {
-            font-size: 36px;
-            color: var(--navy);
-            margin-bottom: 8px;
-        }
-
-        .section-header .subtitle {
-            color: var(--text-muted);
-            font-size: 16px;
-        }
-
-        /* ── Upcoming Alert ── */
+        /* ── Alert Banner ── */
         .alert-banner {
             background: linear-gradient(135deg, var(--red), var(--red-light));
             color: white;
@@ -215,89 +99,24 @@
         .alert-banner .alert-text h3 { font-size: 18px; font-family: 'Source Sans 3', sans-serif; font-weight: 700; }
         .alert-banner .alert-text p { opacity: 0.9; font-size: 14px; }
 
-        /* ── Cards Grid ── */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+        /* ── Feed Sections ── */
+        .feed-section {
+            margin-bottom: 48px;
         }
 
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            border: 1px solid var(--border);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
-
-        /* ── Candidate Cards ── */
-        .candidate-card {
-            text-align: center;
-            position: relative;
-        }
-
-        .candidate-card .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--navy-light), var(--navy));
-            margin: 0 auto 16px;
+        .feed-section .section-header {
+            text-align: left;
+            margin-bottom: 20px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255,255,255,0.5);
-            font-size: 36px;
-            overflow: hidden;
+            align-items: baseline;
+            justify-content: space-between;
         }
 
-        .candidate-card .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .feed-section .section-header h2 {
+            font-size: 28px;
         }
 
-        .candidate-card.incumbent .avatar {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            box-shadow: 0 0 0 3px var(--white), 0 0 0 5px var(--gold);
-        }
-
-        .candidate-card .name {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 4px;
-        }
-
-        .candidate-card .status {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 8px;
-        }
-
-        .badge.incumbent { background: #FEF3C7; color: var(--warning); }
-        .badge.deadline { background: #FEE2E2; color: #991B1B; }
-        .badge.new { background: #DBEAFE; color: #1E40AF; }
-
-        /* ── Officials Table ── */
+        /* ── Officials Grid ── */
         .officials-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -318,14 +137,6 @@
             margin-bottom: 16px;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--gold);
-        }
-
-        .official-row .official-photo {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
         }
 
         .official-row {
@@ -349,9 +160,16 @@
         }
 
         .official-row:last-child { border-bottom: none; }
-
         .official-row .name { font-weight: 600; color: var(--text); font-size: 14px; flex: 1; text-align: left; }
         .official-row .title { color: var(--text-muted); font-size: 14px; text-align: right; flex-shrink: 0; }
+
+        .official-row .official-photo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
 
         /* ── Calendar ── */
         .calendar-grid {
@@ -386,134 +204,26 @@
 
         .cal-event { font-weight: 500; }
 
-        /* ── Business Section ── */
-        .business-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .business-column h3 {
-            font-size: 22px;
-            color: var(--navy);
-            margin-bottom: 8px;
-        }
-
-        .business-column .col-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .business-column.friendly .biz-card { border-left: 4px solid var(--success); }
-        .business-column.watch .biz-card { border-left: 4px solid var(--warning); }
-
-        .biz-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-        }
-
-        .biz-card .biz-name { font-weight: 700; font-size: 16px; color: var(--navy); }
-        .biz-card .biz-type { font-size: 13px; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
-        .biz-card .biz-location { font-size: 13px; color: var(--text-muted); margin: 4px 0; }
-        .biz-card .biz-note { font-size: 14px; color: var(--text); margin-top: 8px; }
-
-        .biz-empty {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-            background: var(--cream-dark);
-            border-radius: 10px;
-            border: 2px dashed var(--border);
-        }
-
-        /* ── News ── */
-        .news-placeholder {
-            text-align: center;
-            padding: 60px 24px;
-            color: var(--text-muted);
-            background: var(--white);
-            border-radius: 12px;
-            border: 2px dashed var(--border);
-        }
-
-        .news-placeholder .icon { font-size: 40px; margin-bottom: 12px; }
-
-        /* ── Footer ── */
-        footer {
-            background: var(--navy);
-            color: rgba(255,255,255,0.7);
-            text-align: center;
-            padding: 40px 24px;
-            margin-top: 64px;
-        }
-
-        footer .footer-brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 8px;
-        }
-
-        footer p { font-size: 14px; }
-
         /* ── Responsive ── */
         @media (max-width: 900px) {
-            nav .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
-            nav .nav-links.open {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 64px;
-                left: 0;
-                right: 0;
-                background: var(--white);
-                padding: 16px 24px;
-                gap: 16px;
-                border-bottom: 3px solid var(--red);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            }
             .hero { height: 360px; }
             .hero h1 { font-size: 36px; }
             .hero p { font-size: 16px; }
             .officials-section { grid-template-columns: 1fr; }
-            .business-section { grid-template-columns: 1fr; }
             .alert-banner { flex-direction: column; text-align: center; margin: -16px 16px 40px; }
-            .section-header h2 { font-size: 28px; }
+            .feed-section .section-header { flex-direction: column; gap: 8px; }
         }
 
         @media (max-width: 480px) {
             .hero { height: 300px; }
             .hero h1 { font-size: 28px; }
-            .cards-grid { grid-template-columns: 1fr; }
             .calendar-grid { grid-template-columns: 1fr; }
             .star-divider::before, .star-divider::after { width: 40px; }
         }
     </style>
 </head>
 <body>
-    <div class="top-bar">Comal County, Texas — Keeping Conservative Values Strong</div>
-
-    <nav>
-        <div class="nav-inner">
-            <div class="logo">Comal <span>GOP</span> Watch</div>
-            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-            <ul class="nav-links">
-                <li><a href="#elections">Elections</a></li>
-                <li><a href="#mayor">Mayor Race</a></li>
-                <li><a href="#officials">Officials</a></li>
-                <li><a href="#businesses">Businesses</a></li>
-                <li><a href="#calendar">Calendar</a></li>
-                <li><a href="#news">News</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="site-nav"></div>
 
     <div class="hero">
         <div class="hero-content">
@@ -525,282 +235,157 @@
     </div>
 
     <div class="container">
+        <!-- Alert Banner -->
         <div id="alert-banner"></div>
-        <div id="content"></div>
-    </div>
 
-    <footer>
-        <div class="footer-brand">★ Comal County GOP Watch ★</div>
-        <p id="updated"></p>
-        <p style="margin-top: 8px;">Keeping our community informed and our values strong.</p>
-    </footer>
-
-    <script>
-    // ════════════════════════════════════════════
-    // POLITICAL DATA — Edit this object to update content
-    // ════════════════════════════════════════════
-    const POLITICAL_DATA = {
-        updated: "2026-02-10T09:30:00-06:00",
-
-        mayoral_candidates: [
-            { name: "Neal Linnartz", status: "Incumbent", incumbent: true, photo: "images/neal-linnartz.jpg" },
-            { name: "Michael French", status: "Candidate", incumbent: false, photo: "images/michael-french.jpg" },
-            { name: "Bradley Porter", status: "Candidate", incumbent: false },
-            { name: "Angela Allen", status: "Candidate", incumbent: false, photo: "images/angela-allen.jpg" },
-            { name: "Jonathon Frazier", status: "Candidate", incumbent: false }
-        ],
-
-        city_council: {
-            district_5: [],
-            district_6: []
-        },
-
-        current_officials: [
-            { title: "Mayor", name: "Neal Linnartz", term: "2023-2026", group: "city", photo: "images/neal-linnartz.jpg" },
-            { title: "City Council District 1", name: "Toni Carter", term: "2025-2028", group: "city", photo: "images/toni-carter.jpg" },
-            { title: "City Council District 2", name: "Michael Capizzi", term: "2025-2028", group: "city", photo: "images/michael-capizzi.jpg" },
-            { title: "City Council District 3", name: "D. Lee Edwards", term: "2024-2027", group: "city", photo: "images/d-lee-edwards.jpg" },
-            { title: "City Council District 4", name: "Lawrence Spradley", term: "2024-2027", group: "city", photo: "images/lawrence-spradley.jpg" },
-            { title: "City Council District 5", name: "Mary Ann Labowski", term: "Up for election 2026", group: "city", photo: "images/mary-ann-labowski.jpg" },
-            { title: "City Council District 6", name: "April Ryan", term: "Up for election 2026", group: "city", photo: "images/april-ryan.jpg" },
-            { title: "County Judge", name: "Vacant (Sherman Krause †)", term: "Krause passed away Feb 7, 2026", group: "county" },
-            { title: "Commissioner Pct 1", name: "Doug Leecock", term: "", group: "county", photo: "images/doug-leecock.jpg" },
-            { title: "Commissioner Pct 2", name: "Scott Haag", term: "", group: "county", photo: "images/scott-haag.jpg" },
-            { title: "Commissioner Pct 3", name: "Kevin Webb", term: "", group: "county", photo: "images/kevin-webb.jpg" },
-            { title: "Commissioner Pct 4", name: "Jen Crownover", term: "", group: "county", photo: "images/jen-crownover.jpg" },
-            { title: "State Rep District 73", name: "Carrie Isaac (R)", term: "Since 2023", group: "state", photo: "images/carrie-isaac.jpg" },
-            { title: "State Senator District 25", name: "Donna Campbell (R)", term: "Since 2013", group: "state", photo: "images/donna-campbell.jpg" }
-        ],
-
-        election_calendar: [
-            { date: "Feb 13, 2026", event: "NB City Council filing deadline", upcoming: true },
-            { date: "Feb 18-27", event: "Early voting (TX Primary)", upcoming: false },
-            { date: "Mar 3, 2026", event: "Texas Primary Election", upcoming: false },
-            { date: "May 2026", event: "New Braunfels Municipal Election", upcoming: false },
-            { date: "May 26, 2026", event: "Primary Runoff (if needed)", upcoming: false },
-            { date: "Nov 3, 2026", event: "General Election", upcoming: false }
-        ]
-    };
-
-    // ════════════════════════════════════════════
-    // BUSINESS DATA — Edit this object to update businesses
-    // ════════════════════════════════════════════
-    const BUSINESS_DATA = {
-        friendly: [
-            // { name: "Example Business", type: "Restaurant", location: "New Braunfels, TX", note: "Reason for listing" }
-        ],
-        watch: [
-            // { name: "Example Business", type: "Retail", location: "New Braunfels, TX", note: "Reason for listing" }
-        ]
-    };
-
-    function render() {
-        const data = POLITICAL_DATA;
-        const biz = BUSINESS_DATA;
-        let html = '';
-
-        // Alert banner
-        const upcomingEvents = data.election_calendar.filter(e => e.upcoming);
-        if (upcomingEvents.length) {
-            document.getElementById('alert-banner').innerHTML = `
-                <div class="alert-banner">
-                    <div class="alert-icon">🗳️</div>
-                    <div class="alert-text">
-                        <h3>Upcoming: ${upcomingEvents[0].event}</h3>
-                        <p>${upcomingEvents[0].date} — Mark your calendars and make your voice heard!</p>
-                    </div>
-                </div>`;
-        }
-
-        // ── Elections Overview ──
-        html += `
-        <div id="elections" class="star-divider">★ ★ ★</div>
-        <div class="section-header">
-            <h2>Upcoming Elections</h2>
-            <p class="subtitle">Key dates for Comal County voters</p>
-        </div>
-        <div class="calendar-grid" style="max-width:700px;margin:0 auto 16px;">
-            <div class="calendar-item upcoming">
-                <div class="cal-date">May 2026</div>
-                <div class="cal-event">New Braunfels Mayor &amp; City Council Elections</div>
-            </div>
-            <div class="calendar-item">
-                <div class="cal-date">Mar 3, 2026</div>
-                <div class="cal-event">Texas Republican Primary</div>
-            </div>
-        </div>`;
-
-        // ── Mayor Race ──
-        html += `
-        <div id="mayor" class="star-divider">★ ★ ★</div>
-        <div class="section-header">
-            <h2>Mayor Race</h2>
-            <p class="subtitle">New Braunfels Mayoral Candidates — Filing deadline: <strong>February 13, 2026</strong></p>
-        </div>
-        <div class="cards-grid">`;
-
-        data.mayoral_candidates.forEach(c => {
-            const avatarContent = c.photo
-                ? `<img src="${c.photo}" alt="${c.name}" loading="lazy">`
-                : `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>`;
-            html += `
-            <div class="card candidate-card ${c.incumbent ? 'incumbent' : ''}">
-                <div class="avatar">
-                    ${avatarContent}
-                </div>
-                <div class="name"><a href="profiles/${c.name.toLowerCase().replace(/\./g, '').replace(/\s+/g, '-')}.html" style="color:var(--navy);text-decoration:none;">${c.name}</a></div>
-                <div class="status">${c.status}</div>
-                ${c.incumbent ? '<span class="badge incumbent">★ Incumbent</span>' : ''}
-            </div>`;
-        });
-
-        html += `</div>`;
-
-        // ── City Council ──
-        html += `
+        <!-- Feed Preview: Candidate/Official News -->
         <div class="star-divider">★ ★ ★</div>
-        <div class="section-header">
-            <h2>City Council Races</h2>
-            <p class="subtitle">Districts 5 &amp; 6 — Filing deadline: February 13, 2026</p>
+        <div class="feed-section">
+            <div class="section-header">
+                <h2>📋 Candidate &amp; Official News</h2>
+            </div>
+            <div id="feed-candidates">
+                <p style="color:var(--text-muted);">Loading...</p>
+            </div>
         </div>
-        <div class="officials-section">
-            <div class="officials-group">
-                <h3>District 5</h3>`;
 
-        if (data.city_council.district_5.length === 0) {
-            html += `<p style="color:var(--text-muted);font-style:italic;padding:16px 0;">No candidates filed yet</p>`;
-        } else {
-            data.city_council.district_5.forEach(c => {
-                html += `<div class="official-row"><span class="title">${c.name}</span><span class="name">${c.status}</span></div>`;
-            });
-        }
-
-        html += `</div><div class="officials-group"><h3>District 6</h3>`;
-
-        if (data.city_council.district_6.length === 0) {
-            html += `<p style="color:var(--text-muted);font-style:italic;padding:16px 0;">No candidates filed yet</p>`;
-        } else {
-            data.city_council.district_6.forEach(c => {
-                html += `<div class="official-row"><span class="title">${c.name}</span><span class="name">${c.status}</span></div>`;
-            });
-        }
-
-        html += `</div></div>`;
-
-        // ── Current Officials ──
-        html += `
-        <div id="officials" class="star-divider">★ ★ ★</div>
-        <div class="section-header">
-            <h2>Current Officials</h2>
-            <p class="subtitle">Elected representatives serving Comal County</p>
+        <!-- Feed Preview: Public Policy -->
+        <div class="star-divider">★ ★ ★</div>
+        <div class="feed-section">
+            <div class="section-header">
+                <h2>🏛️ Public Policy &amp; Local Government</h2>
+            </div>
+            <div id="feed-policy">
+                <p style="color:var(--text-muted);">Loading...</p>
+            </div>
         </div>
-        <div class="officials-section" style="grid-template-columns:1fr 1fr;">`;
 
-        const city = data.current_officials.filter(o => (o.group || 'city') === 'city');
-        const countyState = data.current_officials.filter(o => o.group === 'county' || o.group === 'state');
-
-        html += `<div class="officials-group"><h3>City of New Braunfels</h3>`;
-        city.forEach(o => {
-            const photoHtml = o.photo ? `<img class="official-photo" src="${o.photo}" alt="${o.name}" loading="lazy">` : '';
-            const cityLink = o.name.includes('†') ? 'profiles/county-judge.html' : 'profiles/' + o.name.replace(/\(R\)/g,'').trim().toLowerCase().replace(/\./g, '').replace(/\s+/g, '-') + '.html';
-            html += `<a href="${cityLink}" class="official-row">${photoHtml}<span class="name">${o.name}</span><span class="title">${o.title}${o.term ? ' (' + o.term + ')' : ''}</span></a>`;
-        });
-        html += `</div>`;
-
-        html += `<div class="officials-group"><h3>County &amp; State</h3>`;
-        countyState.forEach(o => {
-            const photoHtml = o.photo ? `<img class="official-photo" src="${o.photo}" alt="${o.name}" loading="lazy">` : '';
-            const csLink = o.name.includes('†') ? 'profiles/county-judge.html' : 'profiles/' + o.name.replace(/\(R\)/g,'').trim().toLowerCase().replace(/\./g, '').replace(/\s+/g, '-') + '.html';
-            html += `<a href="${csLink}" class="official-row">${photoHtml}<span class="name">${o.name}</span><span class="title">${o.title}${o.term ? ' (' + o.term + ')' : ''}</span></a>`;
-        });
-        html += `</div></div>`;
-
-        // ── Local Businesses ──
-        html += `
-        <div id="businesses" class="star-divider">★ ★ ★</div>
-        <div class="section-header">
-            <h2>Local Businesses</h2>
-            <p class="subtitle">Know where your dollars go — support businesses that share our values</p>
+        <!-- Feed Preview: Business Watch -->
+        <div class="star-divider">★ ★ ★</div>
+        <div class="feed-section">
+            <div class="section-header">
+                <h2>👁️ Business Watch</h2>
+            </div>
+            <div id="feed-business">
+                <p style="color:var(--text-muted);">Loading...</p>
+            </div>
         </div>
-        <div class="business-section">
-            <div class="business-column friendly">
-                <h3>🤝 Conservative-Friendly</h3>
-                <p class="col-desc">Businesses that support conservative values, Republican causes, and our community.</p>`;
 
-        if (biz.friendly.length === 0) {
-            html += `<div class="biz-empty"><p>Listings coming soon</p><p style="font-size:13px;margin-top:4px;">Know a business? Let us know!</p></div>`;
-        } else {
-            biz.friendly.forEach(b => {
-                html += `<div class="biz-card">
-                    <div class="biz-type">${b.type}</div>
-                    <div class="biz-name">${b.name}</div>
-                    <div class="biz-location">📍 ${b.location}</div>
-                    ${b.note ? '<div class="biz-note">' + b.note + '</div>' : ''}
-                </div>`;
-            });
-        }
-
-        html += `</div><div class="business-column watch">
-            <h3>👁️ Businesses to Watch</h3>
-            <p class="col-desc">Businesses that have publicly supported policies or causes contrary to our conservative values.</p>`;
-
-        if (biz.watch.length === 0) {
-            html += `<div class="biz-empty"><p>No listings yet</p><p style="font-size:13px;margin-top:4px;">Have information? Reach out to us.</p></div>`;
-        } else {
-            biz.watch.forEach(b => {
-                html += `<div class="biz-card">
-                    <div class="biz-type">${b.type}</div>
-                    <div class="biz-name">${b.name}</div>
-                    <div class="biz-location">📍 ${b.location}</div>
-                    ${b.note ? '<div class="biz-note">' + b.note + '</div>' : ''}
-                </div>`;
-            });
-        }
-
-        html += `</div></div>`;
-
-        // ── Election Calendar ──
-        html += `
+        <!-- Election Calendar -->
         <div id="calendar" class="star-divider">★ ★ ★</div>
         <div class="section-header">
             <h2>Election Calendar</h2>
-            <p class="subtitle">Important dates for the 2026 election cycle</p>
+            <p>Important dates for the 2026 election cycle</p>
         </div>
-        <div class="calendar-grid">`;
+        <div id="election-calendar" class="calendar-grid"></div>
 
-        data.election_calendar.forEach(item => {
-            const upcoming = item.upcoming || (item.date.includes('Feb'));
-            html += `
-            <div class="calendar-item ${upcoming ? 'upcoming' : ''}">
-                <div class="cal-date">${item.date}</div>
-                <div class="cal-event">${item.event}</div>
-            </div>`;
-        });
-
-        html += `</div>`;
-
-        // ── News ──
-        html += `
-        <div id="news" class="star-divider">★ ★ ★</div>
+        <!-- Current Officials -->
+        <div id="officials" class="star-divider">★ ★ ★</div>
         <div class="section-header">
-            <h2>Local Political News</h2>
-            <p class="subtitle">Updates, announcements, and developments</p>
+            <h2>Current Officials</h2>
+            <p>Elected representatives serving Comal County</p>
         </div>
-        <div class="news-placeholder">
-            <div class="icon">📰</div>
-            <p style="font-size:18px;font-weight:600;margin-bottom:8px;">News &amp; Updates Coming Soon</p>
-            <p>Candidate announcements, election updates, and local political developments will be posted here.</p>
-        </div>`;
+        <div id="officials-grid" class="officials-section"></div>
+    </div>
 
-        document.getElementById('content').innerHTML = html;
+    <div id="site-footer"></div>
 
-        // Updated timestamp
-        const d = new Date(data.updated);
-        document.getElementById('updated').textContent =
-            'Last updated: ' + d.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
-    }
+    <script src="js/utils.js"></script>
+    <script src="js/feed-renderer.js"></script>
+    <script src="js/layout.js"></script>
+    <script>
+    (function () {
+        'use strict';
 
-    render();
+        // Load feed previews
+        function loadFeedPreview(jsonUrl, containerId, viewAllUrl) {
+            var container = document.getElementById(containerId);
+            fetchFeed(jsonUrl)
+                .then(function (entries) {
+                    renderFeedPreview(entries, container, 3, viewAllUrl);
+                })
+                .catch(function () {
+                    container.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">No entries yet.</p>';
+                });
+        }
+
+        loadFeedPreview('data/candidate-news.json', 'feed-candidates', '/feeds/candidates.html');
+        loadFeedPreview('data/policy-feed.json', 'feed-policy', '/feeds/policy.html');
+        loadFeedPreview('data/business-watch.json', 'feed-business', '/feeds/business.html');
+
+        // Load officials from JSON
+        fetch('data/officials.json')
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                renderAlertBanner(data);
+                renderElectionCalendar(data);
+                renderOfficials(data);
+            })
+            .catch(function (err) {
+                console.error('Failed to load officials data:', err);
+            });
+
+        function renderAlertBanner(data) {
+            var upcoming = (data.election_calendar || []).filter(function (e) { return e.upcoming; });
+            if (upcoming.length > 0) {
+                document.getElementById('alert-banner').innerHTML =
+                    '<div class="alert-banner">' +
+                    '  <div class="alert-icon">🗳️</div>' +
+                    '  <div class="alert-text">' +
+                    '    <h3>Upcoming: ' + upcoming[0].event + '</h3>' +
+                    '    <p>' + upcoming[0].date + ' — Mark your calendars and make your voice heard!</p>' +
+                    '  </div>' +
+                    '</div>';
+            }
+        }
+
+        function renderElectionCalendar(data) {
+            var calEl = document.getElementById('election-calendar');
+            var html = '';
+            (data.election_calendar || []).forEach(function (item) {
+                var cls = item.upcoming ? 'calendar-item upcoming' : 'calendar-item';
+                html += '<div class="' + cls + '">' +
+                    '<div class="cal-date">' + item.date + '</div>' +
+                    '<div class="cal-event">' + item.event + '</div>' +
+                    '</div>';
+            });
+            calEl.innerHTML = html;
+        }
+
+        function renderOfficials(data) {
+            var gridEl = document.getElementById('officials-grid');
+            var officials = data.current_officials || [];
+            var city = officials.filter(function (o) { return o.group === 'city'; });
+            var countyState = officials.filter(function (o) { return o.group === 'county' || o.group === 'state'; });
+
+            var html = '<div class="officials-group"><h3>City of New Braunfels</h3>';
+            city.forEach(function (o) {
+                html += officialRow(o);
+            });
+            html += '</div>';
+
+            html += '<div class="officials-group"><h3>County &amp; State</h3>';
+            countyState.forEach(function (o) {
+                html += officialRow(o);
+            });
+            html += '</div>';
+
+            gridEl.innerHTML = html;
+        }
+
+        function officialRow(o) {
+            var photoHtml = o.photo
+                ? '<img class="official-photo" src="' + o.photo + '" alt="' + o.name + '" loading="lazy">'
+                : '';
+            var link = 'profiles/' + o.slug + '.html';
+            var termStr = o.term ? ' (' + o.term + ')' : '';
+            return '<a href="' + link + '" class="official-row">' +
+                photoHtml +
+                '<span class="name">' + o.name + '</span>' +
+                '<span class="title">' + o.title + termStr + '</span>' +
+                '</a>';
+        }
+    })();
     </script>
 </body>
 </html>
