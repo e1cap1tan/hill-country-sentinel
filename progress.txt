@@ -18,6 +18,7 @@ Started: 2026-02-11
 - Shared styles in css/shared.css, utilities in js/utils.js
 - JSON validation via test/validate-json.js (schema: 'feed-entry')
 - Date strings should use T12:00:00 suffix to avoid timezone day-shift issues in tests
+- Feed pages pattern: page-header (navy gradient) → breadcrumb → filter-bar → feed-container; filter via event delegation; fetch JSON with fetchFeed(), render with renderFeedList()
 
 ---
 
@@ -77,4 +78,16 @@ Started: 2026-02-11
 - All 86 tests pass (26 new + 60 existing)
 - Files changed: index.html, test/homepage.test.js
 - **Learnings:** Keep page-specific styles inline but move shared styles to shared.css; officials.json slug field makes profile linking clean
+---
+
+## 2026-02-11 14:52 - US-006: Create candidate news feed page
+- Created feeds/candidates.html with full candidate/official news feed
+- Page header with navy gradient, breadcrumb back to home
+- Dynamic category filter buttons extracted from data (All + unique categories)
+- Client-side filtering via event delegation on filter bar
+- Fetches data/candidate-news.json, renders via renderFeedList sorted newest-first
+- Created test/candidates-feed.test.js with 22 tests (page structure, filtering logic, responsiveness)
+- All 108 tests pass (22 new + 86 existing)
+- Files changed: feeds/candidates.html, test/candidates-feed.test.js
+- **Learnings:** Feed page pattern: page-header div, breadcrumb, filter-bar, feed-container; reuse this for policy and business feed pages
 ---
