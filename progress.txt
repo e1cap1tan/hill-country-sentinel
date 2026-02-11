@@ -4,6 +4,10 @@ Task: Rebuild Comal County GOP Watch into multi-page political intelligence hub
 Started: 2026-02-11
 
 ## Codebase Patterns
+- Feed JSON files use ID prefixes: cn- (candidate), pf- (policy), bw- (business)
+- officials.json has slugs for URL-safe linking to bio pages
+- Data files live in data/ directory, validated by test/validate-json.test.js
+- Previous patterns:
 - Static site, GitHub Pages — no build tools, vanilla HTML/CSS/JS only
 - Fonts: Playfair Display (headings) + Source Sans 3 (body) via Google Fonts
 - Color scheme: --red (#8B1A1A), --navy (#1B2A4A), --cream (#FDF8F0), --gold (#C5993A)
@@ -22,4 +26,14 @@ Started: 2026-02-11
 - Created test/utils.test.js (9 tests) and test/validate-json.test.js (6 tests) + test/validate-json.js
 - All 20 tests pass
 - **Learnings:** Date-only ISO strings (YYYY-MM-DD) parse as UTC midnight, can shift day in local TZ tests
+---
+
+## 2026-02-11 13:22 - US-002: Create JSON data files with schema and seed data
+- Created 3 feed JSON files (candidate-news, policy-feed, business-watch) with 3 seed entries each
+- Extracted all officials/candidates from index.html into data/officials.json with slug fields
+- Documented full schema, categories taxonomy, and tags in data/schema.md
+- Added 9 new validation tests (feed files + officials structure)
+- All 29 tests passing
+- Files changed: data/*.json, data/schema.md, test/validate-json.test.js
+- **Learnings:** officials.json includes election_calendar too; slugs added for future bio page linking
 ---
