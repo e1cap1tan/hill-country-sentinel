@@ -1,0 +1,25 @@
+# Progress Log
+Run: 00b4d2cc-3301-4400-87a3-13ca6d768cbd
+Task: Rebuild Comal County GOP Watch into multi-page political intelligence hub
+Started: 2026-02-11
+
+## Codebase Patterns
+- Static site, GitHub Pages — no build tools, vanilla HTML/CSS/JS only
+- Fonts: Playfair Display (headings) + Source Sans 3 (body) via Google Fonts
+- Color scheme: --red (#8B1A1A), --navy (#1B2A4A), --cream (#FDF8F0), --gold (#C5993A)
+- Tests use `node --test test/*.test.js` (Node.js built-in test runner)
+- JS uses CommonJS `module.exports` for Node compatibility + browser globals
+- Shared styles in css/shared.css, utilities in js/utils.js
+- JSON validation via test/validate-json.js (schema: 'feed-entry')
+- Date strings should use T12:00:00 suffix to avoid timezone day-shift issues in tests
+
+---
+
+## 2026-02-11 13:17 - US-001: Add project scaffolding, shared CSS, and test infrastructure
+- Created package.json with test script
+- Extracted shared CSS (variables, nav, footer, cards-grid, responsive breakpoints) into css/shared.css
+- Created js/utils.js with formatDate, truncateText, slugify
+- Created test/utils.test.js (9 tests) and test/validate-json.test.js (6 tests) + test/validate-json.js
+- All 20 tests pass
+- **Learnings:** Date-only ISO strings (YYYY-MM-DD) parse as UTC midnight, can shift day in local TZ tests
+---
