@@ -1,0 +1,32 @@
+[
+  {
+    "id": "pf-001",
+    "date": "2026-02-09T12:00:00",
+    "title": "New Braunfels City Council Approves Annexation of 200 Acres",
+    "summary": "City Council voted 5-2 to annex approximately 200 acres along FM 306 for future mixed-use development. Council members Edwards and Spradley voted against, citing infrastructure concerns.",
+    "source": "Herald-Zeitung",
+    "sourceUrl": "https://herald-zeitung.com",
+    "category": "city-council",
+    "tags": ["annexation", "development", "new-braunfels"]
+  },
+  {
+    "id": "pf-002",
+    "date": "2026-02-06T12:00:00",
+    "title": "Comal County Commissioners Discuss Budget for Road Repairs",
+    "summary": "Commissioners Court reviewed a proposed $12M allocation for county road repairs, prioritizing routes in precincts 1 and 3 that have seen the most growth-related wear.",
+    "source": "Comal County Official",
+    "sourceUrl": "https://co.comal.tx.us",
+    "category": "county-government",
+    "tags": ["budget", "roads", "infrastructure"]
+  },
+  {
+    "id": "pf-003",
+    "date": "2026-02-03T12:00:00",
+    "title": "School Board Reviews Policy on Parental Notification",
+    "summary": "The Comal ISD Board of Trustees discussed updates to its parental notification policies, aiming to increase transparency around curriculum changes and library material reviews.",
+    "source": "CISD Board Minutes",
+    "sourceUrl": "https://comal-isd.org",
+    "category": "education",
+    "tags": ["comal-isd", "school-board", "parental-rights"]
+  }
+]

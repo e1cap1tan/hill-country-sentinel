@@ -1,0 +1,32 @@
+[
+  {
+    "id": "bw-001",
+    "date": "2026-02-07T12:00:00",
+    "title": "Local Restaurant Chain Donates to Conservative Candidates",
+    "summary": "A well-known New Braunfels restaurant group publicly announced donations to multiple conservative candidates in the upcoming municipal election, drawing both praise and criticism on social media.",
+    "source": "Community Report",
+    "sourceUrl": "https://herald-zeitung.com",
+    "category": "donations",
+    "tags": ["restaurant", "campaign-finance", "new-braunfels"]
+  },
+  {
+    "id": "bw-002",
+    "date": "2026-02-04T12:00:00",
+    "title": "Gruene Area Shop Displays Pride Flag, Sparks Local Debate",
+    "summary": "A retail shop in the Gruene Historic District began displaying a pride flag, prompting a social media debate among local residents about businesses taking social stances in a conservative community.",
+    "source": "Social Media",
+    "sourceUrl": "https://facebook.com",
+    "category": "social-stance",
+    "tags": ["gruene", "social-issues", "retail"]
+  },
+  {
+    "id": "bw-003",
+    "date": "2026-02-01T12:00:00",
+    "title": "Chamber of Commerce Endorses Pro-Growth Candidates",
+    "summary": "The Greater New Braunfels Chamber of Commerce released its endorsement list for the 2026 municipal election, backing candidates who support business-friendly development policies.",
+    "source": "NB Chamber",
+    "sourceUrl": "https://innewbraunfels.com",
+    "category": "endorsements",
+    "tags": ["chamber-of-commerce", "endorsements", "2026-election"]
+  }
+]

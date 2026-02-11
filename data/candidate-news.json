@@ -1,0 +1,34 @@
+[
+  {
+    "id": "cn-001",
+    "date": "2026-02-10T12:00:00",
+    "title": "County Judge Seat Vacant After Passing of Sherman Krause",
+    "summary": "Comal County Judge Sherman Krause passed away on February 7, 2026, leaving the county's top administrative position vacant. Commissioners Court will need to appoint a replacement or call a special election.",
+    "source": "Herald-Zeitung",
+    "sourceUrl": "https://herald-zeitung.com",
+    "category": "county-government",
+    "tags": ["county-judge", "vacancy", "commissioners-court"]
+  },
+  {
+    "id": "cn-002",
+    "date": "2026-02-08T12:00:00",
+    "title": "Five Candidates File for New Braunfels Mayor",
+    "summary": "The New Braunfels mayoral race is shaping up with five candidates: incumbent Neal Linnartz, Michael French, Bradley Porter, Angela Allen, and Jonathon Frazier. Filing deadline is February 13, 2026.",
+    "source": "Herald-Zeitung",
+    "sourceUrl": "https://herald-zeitung.com",
+    "category": "elections",
+    "tags": ["mayor", "new-braunfels", "2026-election"],
+    "relatedCandidate": "neal-linnartz"
+  },
+  {
+    "id": "cn-003",
+    "date": "2026-02-05T12:00:00",
+    "title": "Rep. Carrie Isaac Files Transportation Infrastructure Bill",
+    "summary": "State Representative Carrie Isaac (R-District 73) filed a bill aimed at improving transportation infrastructure in the I-35 corridor through Comal County, citing rapid population growth as the driving factor.",
+    "source": "Texas Tribune",
+    "sourceUrl": "https://texastribune.org",
+    "category": "legislation",
+    "tags": ["state-legislature", "transportation", "i-35"],
+    "relatedCandidate": "carrie-isaac"
+  }
+]
