@@ -1,0 +1,10 @@
+{
+  "name": "comal-gop-watch",
+  "version": "1.0.0",
+  "description": "Comal County GOP Watch — Local political intelligence hub",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "validate": "node test/validate-json.js"
+  }
+}
