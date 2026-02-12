@@ -10,6 +10,8 @@
     function getBase() {
         if (typeof window === 'undefined') return '';
         var path = window.location.pathname;
+        // If in articles/archive/ (two levels deep), go up two levels
+        if (path.match(/\/articles\/archive\//i)) return '../../';
         // If in a subdirectory like /comal-gop-watch/feeds/, go up one level
         if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) return '../';
         return '';

@@ -5,7 +5,8 @@
     "title": "Local Restaurant Chain Donates to Conservative Candidates",
     "summary": "A well-known New Braunfels restaurant group publicly announced donations to multiple conservative candidates in the upcoming municipal election, drawing both praise and criticism on social media.",
     "source": "Community Report",
-    "sourceUrl": "https://herald-zeitung.com",
+    "sourceUrl": "https://herald-zeitung.com/business/local-restaurant-donations-conservative-candidates",
+    "archiveUrl": "articles/archive/restaurant-chain-donates-conservative.html",
     "category": "donations",
     "tags": ["restaurant", "campaign-finance", "new-braunfels"]
   },
@@ -25,7 +26,8 @@
     "title": "Chamber of Commerce Endorses Pro-Growth Candidates",
     "summary": "The Greater New Braunfels Chamber of Commerce released its endorsement list for the 2026 municipal election, backing candidates who support business-friendly development policies.",
     "source": "NB Chamber",
-    "sourceUrl": "https://innewbraunfels.com",
+    "sourceUrl": "https://innewbraunfels.com/chamber/endorsements/2026-election",
+    "archiveUrl": "articles/archive/chamber-endorsements-2026.html",
     "category": "endorsements",
     "tags": ["chamber-of-commerce", "endorsements", "2026-election"]
   }

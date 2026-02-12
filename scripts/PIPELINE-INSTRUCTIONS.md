@@ -1,4 +1,47 @@
-# Content Pipeline Instructions for Original Articles
+# Content Pipeline Instructions for Articles and External Content
+
+## Critical Rule: Always Use Specific Article URLs
+
+**NEVER use generic homepage URLs for external articles.** Always find the specific article URL.
+
+❌ **Wrong**: `https://herald-zeitung.com`
+❌ **Wrong**: `https://texastribune.org`
+❌ **Wrong**: `https://co.comal.tx.us`
+
+✅ **Correct**: `https://herald-zeitung.com/news/specific-article-title/article_123abc.html`
+✅ **Correct**: `https://texastribune.org/2026/02/10/texas-politics-article/`
+✅ **Correct**: `https://co.comal.tx.us/page/commissioners-court/meeting-minutes-02-10-26`
+
+## External Article Archival Workflow
+
+For ALL external articles (not source "Comal GOP Watch"):
+
+1. **Find the specific article URL** - Never use homepage URLs
+2. **Add the feed entry** with the specific `sourceUrl`
+3. **Create archive backup** using the archive script:
+   ```bash
+   # Use the archival system to create local backup
+   node scripts/archive-article.js \
+     --url "https://specific-article-url.com/path" \
+     --slug "descriptive-slug-matching-feed-id" \
+     --source "Publication Name"
+   ```
+4. **Update feed entry** to include `archiveUrl` field pointing to the archive
+
+Example feed entry with archive:
+```json
+{
+  "id": "cn-001",
+  "date": "2026-02-10T12:00:00",
+  "title": "County Judge Seat Vacant After Passing of Sherman Krause",
+  "summary": "...",
+  "source": "Herald-Zeitung",
+  "sourceUrl": "https://herald-zeitung.com/news/county-judge-sherman-krause-passes/article_abc123.html",
+  "archiveUrl": "articles/archive/county-judge-seat-vacant.html",
+  "category": "county-government",
+  "tags": ["county-judge", "vacancy"]
+}
+```
 
 ## When to Create Original Articles
 

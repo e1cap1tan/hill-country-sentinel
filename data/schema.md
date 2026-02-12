@@ -23,6 +23,7 @@ All three feed files (`candidate-news.json`, `policy-feed.json`, `business-watch
 |--------------------|--------|------------------------------------------------|
 | `relatedCandidate` | string | Slug of related candidate/official             |
 | `imageUrl`         | string | URL or path to an associated image             |
+| `archiveUrl`       | string | Local archive path for external articles (e.g. `articles/archive/article-slug.html`) |
 
 ### ID Prefixes
 
