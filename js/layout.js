@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════
-   Comal County GOP Watch — Layout Components
+   Hill Country Sentinel — Layout Components
    Shared nav and footer injected into all pages
    ══════════════════════════════════════════ */
 
@@ -12,7 +12,7 @@
         var path = window.location.pathname;
         // If in articles/archive/ (two levels deep), go up two levels
         if (path.match(/\/articles\/archive\//i)) return '../../';
-        // If in a subdirectory like /comal-gop-watch/feeds/, go up one level
+        // If in a subdirectory like /hill-country-sentinel/feeds/, go up one level
         if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) return '../';
         return '';
     }
@@ -30,10 +30,10 @@
             return '<li><a href="' + base + link.href + '">' + link.label + '</a></li>';
         }).join('\n            ');
 
-        return '<div class="top-bar">Comal County GOP Watch &mdash; Keeping Local Voters Informed</div>\n' +
+        return '<div class="top-bar">Hill Country Sentinel &mdash; Comal County Political Intelligence</div>\n' +
             '<nav>\n' +
             '  <div class="nav-inner">\n' +
-            '    <a href="' + base + 'index.html" class="logo">Comal <span>GOP</span> Watch</a>\n' +
+            '    <a href="' + base + 'index.html" class="logo">Hill Country <span>Sentinel</span></a>\n' +
             '    <ul class="nav-links" id="nav-links">\n' +
             '        ' + linksHtml + '\n' +
             '    </ul>\n' +
@@ -45,8 +45,8 @@
     function renderFooter() {
         var year = new Date().getFullYear();
         return '<footer>\n' +
-            '  <div class="footer-brand">Comal GOP Watch</div>\n' +
-            '  <p>&copy; ' + year + ' Comal County GOP Watch. Independent voter resource.</p>\n' +
+            '  <div class="footer-brand">Hill Country Sentinel</div>\n' +
+            '  <p>&copy; ' + year + ' Hill Country Sentinel. Independent political intelligence.</p>\n' +
             '  <p style="margin-top: 8px; font-size: 12px;">Last updated: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</p>\n' +
             '</footer>';
     }

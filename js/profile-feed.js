@@ -1,5 +1,5 @@
 /**
- * Comal County GOP Watch — Profile Feed Module
+ * Hill Country Sentinel — Profile Feed Module
  *
  * Fetches candidate-news.json and renders entries filtered by relatedCandidate slug.
  * Works in browser (globals) and Node.js (CommonJS).

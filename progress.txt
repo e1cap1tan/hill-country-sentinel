@@ -1,6 +1,6 @@
 # Progress Log
 Run: 00b4d2cc-3301-4400-87a3-13ca6d768cbd
-Task: Rebuild Comal County GOP Watch into multi-page political intelligence hub
+Task: Rebuild Hill Country Sentinel into multi-page political intelligence hub
 Started: 2026-02-11
 
 ## Codebase Patterns

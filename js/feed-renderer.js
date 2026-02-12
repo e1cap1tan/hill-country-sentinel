@@ -1,5 +1,5 @@
 /**
- * Comal County GOP Watch — Feed Renderer Module
+ * Hill Country Sentinel — Feed Renderer Module
  *
  * Fetches JSON feed data and renders feed cards.
  * Works in browser (globals) and Node.js (CommonJS).

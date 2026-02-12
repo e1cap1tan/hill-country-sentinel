@@ -1,5 +1,5 @@
 /**
- * Comal County GOP Watch — Utility Functions
+ * Hill Country Sentinel — Utility Functions
  */
 
 /**

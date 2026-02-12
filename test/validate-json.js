@@ -1,5 +1,5 @@
 /**
- * JSON Schema Validator for Comal County GOP Watch data files.
+ * JSON Schema Validator for Hill Country Sentinel data files.
  *
  * Usage: node test/validate-json.js <json-file> [schema-name]
  *
