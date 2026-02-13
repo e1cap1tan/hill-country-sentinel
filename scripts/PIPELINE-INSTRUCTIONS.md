@@ -23,7 +23,7 @@
 
 ## External Article Archival Workflow
 
-For ALL external articles (not source "Comal GOP Watch"):
+For ALL external articles (not source "Hill Country Sentinel"):
 
 1. **Find the specific article URL** - Never use homepage URLs
 2. **Add the feed entry** with the specific `sourceUrl`
@@ -70,7 +70,7 @@ Create original articles using the `generate-article.js` script when:
 - The article should include who/what/when/where/why and local context
 - Always include a footnote/source section at the bottom linking to the original press release
 - Feed card should link to OUR article, not the press release
-- Source in feed entry should be "Comal GOP Watch"
+- Source in feed entry should be "Hill Country Sentinel"
 - Include the original press release link in the `sources` parameter when generating the article
 
 ## Research Process
@@ -120,7 +120,7 @@ Before writing an original article, thoroughly research to gather:
    **Note**: The article generator automatically creates a professional header image using xAI's image generation API. The image is styled for modern news/journalism with high contrast and clean composition appropriate for Texas local government and politics coverage.
 
 3. **Create Feed Entry**: Add entry to the appropriate feed JSON file with:
-   - `source`: "Comal GOP Watch" (not "Facebook" or "Social Media")
+   - `source`: "Hill Country Sentinel" (not "Facebook" or "Social Media")
    - `sourceUrl`: The generated article path (e.g., `articles/article-slug.html`)
    - `image`: Path to the generated header image (e.g., `articles/images/article-slug.jpg`)
    - Appropriate category and tags
@@ -185,4 +185,4 @@ Before publishing an original article:
 - [ ] Sources are appropriately attributed
 - [ ] Local context is provided
 - [ ] Article maintains objective tone
-- [ ] Feed entry points to internal article with source "Comal GOP Watch"
+- [ ] Feed entry points to internal article with source "Hill Country Sentinel"

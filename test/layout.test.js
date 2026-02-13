@@ -50,7 +50,7 @@ describe('layout.js — renderFooter', function () {
 
     it('contains footer-brand', function () {
         assert.ok(html.includes('class="footer-brand"'), 'Missing footer-brand');
-        assert.ok(html.includes('Comal GOP Watch'), 'Missing site name in footer');
+        assert.ok(html.includes('Hill Country Sentinel'), 'Missing site name in footer');
     });
 
     it('contains copyright with current year', function () {
