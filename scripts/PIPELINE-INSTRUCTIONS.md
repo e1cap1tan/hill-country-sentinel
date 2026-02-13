@@ -1,6 +1,15 @@
 # Content Pipeline Instructions for Articles and External Content
 
-## Critical Rule: Always Use Specific Article URLs
+## Critical Rule: sourceUrl Must Be RELATIVE for Internal Articles
+
+**For original Hill Country Sentinel articles, sourceUrl MUST be a relative path:**
+- ✅ `articles/my-article-slug.html`
+- ❌ `https://e1cap1tan.github.io/hill-country-sentinel/articles/my-article-slug.html`
+- ❌ `https://e1cap1tan.github.io/comal-gop-watch/articles/my-article-slug.html`
+
+**NEVER use absolute URLs for internal articles.** The site uses relative paths for GitHub Pages compatibility. Absolute URLs will break navigation.
+
+## Critical Rule: Always Use Specific Article URLs for External Sources
 
 **NEVER use generic homepage URLs for external articles.** Always find the specific article URL.
 
