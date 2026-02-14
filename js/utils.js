@@ -46,7 +46,143 @@ function slugify(name) {
         .replace(/^-|-$/g, '');
 }
 
+/**
+ * Auto-link candidate names in text content.
+ * Finds candidate names and replaces them with links to their profile pages.
+ * @param {string} text - Text content to process
+ * @param {Array} candidateList - Array of candidate objects with name and slug
+ * @param {string} [basePath=''] - Base path for links (e.g., '../' for subdirectories)
+ * @returns {string} Text with candidate names linked
+ */
+function autoLinkCandidates(text, candidateList, basePath) {
+    if (!text || typeof text !== 'string' || !candidateList || !candidateList.length) {
+        return text;
+    }
+
+    basePath = basePath || '';
+    let processedText = text;
+
+    // Sort candidates by name length (descending) to match longer names first
+    const sortedCandidates = [...candidateList].sort((a, b) => 
+        (b.name || '').length - (a.name || '').length
+    );
+
+    // Process each candidate
+    sortedCandidates.forEach(candidate => {
+        if (!candidate.name || !candidate.slug) return;
+
+        // Create variations of the name to match
+        const nameVariations = [
+            candidate.name,
+            candidate.name.replace(/\s*\([^)]*\)/g, ''), // Remove parenthetical content like "(R)"
+            candidate.name.replace(/\s*(Incumbent|incumbent)/g, ''), // Remove "Incumbent"
+        ].filter(name => name && name.trim() && name.trim() !== candidate.name);
+
+        // Add the original name back if it wasn't already there
+        if (!nameVariations.includes(candidate.name)) {
+            nameVariations.unshift(candidate.name);
+        }
+
+        nameVariations.forEach(nameVariation => {
+            const trimmedName = nameVariation.trim();
+            if (!trimmedName || trimmedName.length < 3) return; // Skip very short names
+
+            // Create regex that matches the name but not when it's already inside an HTML tag
+            // This regex looks for the name that isn't preceded by href=" or > (inside a link)
+            const regex = new RegExp(
+                `(?<!href=["'][^"']*|>[^<]*)\\b${escapeRegex(trimmedName)}\\b(?![^<]*<\\/a>)`,
+                'gi'
+            );
+
+            // Replace with link only if not already linked
+            const replacement = `<a href="${basePath}profiles/${candidate.slug}.html" class="auto-link candidate-link">${trimmedName}</a>`;
+            
+            // Only replace if the text isn't already inside a link
+            processedText = processedText.replace(regex, (match) => {
+                // Additional check: make sure we're not inside an existing link
+                const beforeMatch = processedText.substring(0, processedText.indexOf(match));
+                const openLinks = (beforeMatch.match(/<a\b[^>]*>/g) || []).length;
+                const closeLinks = (beforeMatch.match(/<\/a>/g) || []).length;
+                
+                // If we're inside a link (more opens than closes), don't replace
+                if (openLinks > closeLinks) {
+                    return match;
+                }
+                
+                return replacement;
+            });
+        });
+    });
+
+    return processedText;
+}
+
+/**
+ * Escape special regex characters in a string.
+ * @param {string} str - String to escape
+ * @returns {string} Escaped string safe for use in regex
+ */
+function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Initialize auto-linking for a page.
+ * Fetches candidate data and applies auto-linking to specified elements.
+ * @param {string|Array} selectors - CSS selectors for elements to process
+ * @param {string} [basePath=''] - Base path for profile links
+ */
+async function initAutoLinking(selectors, basePath) {
+    try {
+        basePath = basePath || '';
+        
+        // Detect base path if not provided
+        if (!basePath && typeof window !== 'undefined') {
+            const path = window.location.pathname;
+            if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
+                basePath = '../';
+            }
+        }
+
+        // Fetch candidate data
+        const response = await fetch(`${basePath}data/officials.json`);
+        if (!response.ok) throw new Error('Failed to fetch officials data');
+        
+        const data = await response.json();
+        
+        // Combine all candidates and officials
+        const allCandidates = [
+            ...(data.current_officials || []),
+            ...(data.mayoral_candidates || [])
+        ];
+
+        // Ensure selectors is an array
+        const selectorArray = Array.isArray(selectors) ? selectors : [selectors];
+
+        // Process each selector
+        selectorArray.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                if (element.innerHTML && !element.hasAttribute('data-auto-linked')) {
+                    element.innerHTML = autoLinkCandidates(element.innerHTML, allCandidates, basePath);
+                    element.setAttribute('data-auto-linked', 'true');
+                }
+            });
+        });
+
+    } catch (error) {
+        console.warn('Auto-linking failed:', error);
+    }
+}
+
 // Export for Node.js (tests), no-op in browser
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { formatDate, truncateText, slugify };
+    module.exports = { 
+        formatDate, 
+        truncateText, 
+        slugify, 
+        autoLinkCandidates, 
+        escapeRegex,
+        initAutoLinking 
+    };
 }

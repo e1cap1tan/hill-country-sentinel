@@ -56,6 +56,21 @@ img { max-width: 100%; height: auto; }
 a { color: var(--red); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* Auto-linked candidate names */
+.auto-candidate-link {
+    color: var(--navy) !important;
+    font-weight: 500;
+    border-bottom: 1px dotted var(--navy);
+    transition: all 0.2s ease;
+}
+
+.auto-candidate-link:hover {
+    color: var(--red) !important;
+    border-bottom-color: var(--red);
+    background-color: var(--cream-dark);
+    text-decoration: none !important;
+}
+
 /* ── Navigation (Weathered Courthouse Aesthetic) ── */
 .top-bar {
     background: linear-gradient(135deg, var(--navy-dark), var(--navy));

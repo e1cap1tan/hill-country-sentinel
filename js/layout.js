@@ -6,15 +6,21 @@
 (function () {
     'use strict';
 
-    // Detect base path: if we're in a subdirectory (e.g. feeds/), prefix with ../
+    // Detect base path for GitHub Pages deployment
     function getBase() {
         if (typeof window === 'undefined') return '';
         var path = window.location.pathname;
+        var isGitHubPages = window.location.hostname.includes('github.io');
+        var baseProject = isGitHubPages ? '/hill-country-sentinel/' : '/';
+        
         // If in articles/archive/ (two levels deep), go up two levels
         if (path.match(/\/articles\/archive\//i)) return '../../';
         // If in a subdirectory like /hill-country-sentinel/feeds/, go up one level
-        if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) return '../';
-        return '';
+        if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
+            return isGitHubPages ? '../' : '../';
+        }
+        // If we're at the root level on GitHub Pages, include the project base
+        return isGitHubPages && !path.includes('/hill-country-sentinel/') ? baseProject : '';
     }
 
     var NAV_LINKS = [
@@ -61,12 +67,121 @@
         }
     }
 
+    // Candidate name to profile mapping
+    var CANDIDATE_PROFILES = {
+        'Angela Allen': 'angela-allen.html',
+        'April Ryan': 'april-ryan.html',
+        'Bradley Porter': 'bradley-porter.html',
+        'Carrie Isaac': 'carrie-isaac.html',
+        'Donna Campbell': 'donna-campbell.html',
+        'Doug Leecock': 'doug-leecock.html',
+        'D. Lee Edwards': 'd-lee-edwards.html',
+        'Jen Crownover': 'jen-crownover.html',
+        'Jonathon Frazier': 'jonathon-frazier.html',
+        'Kevin Webb': 'kevin-webb.html',
+        'Kristen Hoyt': 'kristen-hoyt.html',
+        'Lawrence Spradley': 'lawrence-spradley.html',
+        'LeAnn Miller': 'leann-miller.html',
+        'Mary Ann Labowski': 'mary-ann-labowski.html',
+        'Michael Capizzi': 'michael-capizzi.html',
+        'Michael French': 'michael-french.html',
+        'Neal Linnartz': 'neal-linnartz.html',
+        'Ryan Bourbon-Stuart': 'ryan-bourbon-stuart.html',
+        'Scott Haag': 'scott-haag.html',
+        'Tom Clark': 'tom-clark.html',
+        'Toni Carter': 'toni-carter.html',
+        'Mark Teixeira': 'mark-teixeira.html',
+        'Paul Rojas': 'paul-rojas.html',
+        'Justin Stratemann': 'justin-stratemann.html',
+        'Brian Minus': 'brian-minus.html',
+        'Randy Rollins': 'randy-rollins.html',
+        'Garrison Maurer': 'garrison-maurer.html',
+        'Romelle Walkup': 'romelle-walkup.html',
+        'Melle Walkup': 'romelle-walkup.html',
+        'Kayne Parrish': 'kayne-parrish.html',
+        'Christi Craddick': 'christi-craddick.html'
+    };
+
+    function autoLinkCandidateNames() {
+        var base = getBase();
+        var profileBase = base + 'profiles/';
+        
+        // Function to escape regex special characters
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        
+        // Sort names by length (longest first) to match full names before partial matches
+        var sortedNames = Object.keys(CANDIDATE_PROFILES).sort(function(a, b) {
+            return b.length - a.length;
+        });
+        
+        // Find all text nodes in the document (excluding nav and footer)
+        var walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function(node) {
+                    // Skip nav, footer, and already linked text
+                    var parent = node.parentElement;
+                    if (!parent) return NodeFilter.FILTER_REJECT;
+                    if (parent.tagName === 'A' || 
+                        parent.closest('nav') || 
+                        parent.closest('footer') ||
+                        parent.closest('#site-nav') ||
+                        parent.closest('#site-footer')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            },
+            false
+        );
+        
+        var textNodes = [];
+        var node;
+        while (node = walker.nextNode()) {
+            textNodes.push(node);
+        }
+        
+        // Process each text node
+        textNodes.forEach(function(textNode) {
+            var originalText = textNode.textContent;
+            var modifiedText = originalText;
+            var hasChanges = false;
+            
+            sortedNames.forEach(function(candidateName) {
+                var profileFile = CANDIDATE_PROFILES[candidateName];
+                var regex = new RegExp('\\b' + escapeRegex(candidateName) + '\\b', 'gi');
+                var matches = modifiedText.match(regex);
+                
+                if (matches) {
+                    // Only link if not already part of a link
+                    modifiedText = modifiedText.replace(regex, function(match) {
+                        hasChanges = true;
+                        return '<a href="' + profileBase + profileFile + '" class="auto-candidate-link">' + match + '</a>';
+                    });
+                }
+            });
+            
+            // Replace the text node with new HTML if changes were made
+            if (hasChanges) {
+                var wrapper = document.createElement('span');
+                wrapper.innerHTML = modifiedText;
+                textNode.parentNode.replaceChild(wrapper, textNode);
+            }
+        });
+    }
+
     function initLayout() {
         var navEl = document.getElementById('site-nav');
         var footerEl = document.getElementById('site-footer');
         if (navEl) { navEl.innerHTML = renderNav(); }
         if (footerEl) { footerEl.innerHTML = renderFooter(); }
         initMobileMenu();
+        
+        // Auto-link candidate names after a short delay
+        setTimeout(autoLinkCandidateNames, 100);
     }
 
     // Auto-init on DOMContentLoaded in browser

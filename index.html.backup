@@ -238,18 +238,11 @@
             border: 1px solid var(--border);
             box-shadow: 0 4px 16px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
 
         .featured-story:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-        }
-        
-        .featured-story:visited {
-            color: inherit;
         }
 
         .featured-story .story-image {
@@ -290,18 +283,11 @@
             border: 1px solid var(--border);
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
 
         .compact-story:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-        }
-        
-        .compact-story:visited {
-            color: inherit;
         }
 
         .compact-story .story-title {
@@ -359,17 +345,11 @@
             gap: 20px;
             align-items: flex-start;
             transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
         }
 
         .full-width-story:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-        }
-        
-        .full-width-story:visited {
-            color: inherit;
         }
 
         .full-width-story .story-content {
@@ -930,21 +910,6 @@
 
         // Load unified news feed
         loadUnifiedNews();
-
-        // Initialize auto-linking for candidate names
-        document.addEventListener('DOMContentLoaded', function() {
-            // Auto-link candidate names in news content, elections section, and other text
-            setTimeout(function() {
-                initAutoLinking([
-                    '#unified-news',
-                    '.election-date-section',
-                    '.compact-race',
-                    '.featured-story .story-content',
-                    '.compact-story',
-                    '.full-width-story .story-content'
-                ], '');
-            }, 1000); // Wait for content to load
-        });
     })();
     </script>
 </body>
