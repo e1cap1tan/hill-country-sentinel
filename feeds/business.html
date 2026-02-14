@@ -171,6 +171,11 @@
                 var categories = getUniqueCategories(entries);
                 renderFilterButtons(categories);
                 applyFilter('all');
+
+                // Initialize auto-linking after content loads
+                setTimeout(function() {
+                    initAutoLinking(['#feed-container'], '../');
+                }, 500);
             }).catch(function (err) {
                 feedContainer.innerHTML = '<p class="no-results">Failed to load feed data.</p>';
                 console.error(err);

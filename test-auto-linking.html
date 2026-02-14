@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-linking Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+        .test-content { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .auto-link.candidate-link { 
+            color: #1E3A5F; 
+            font-weight: 600; 
+            border-bottom: 1px dotted #B8860B; 
+            text-decoration: none; 
+        }
+        .auto-link.candidate-link:hover { 
+            color: #B22234; 
+            background-color: rgba(178, 34, 52, 0.05); 
+        }
+    </style>
+</head>
+<body>
+    <h1>Auto-linking Test</h1>
+    
+    <h2>Test Content:</h2>
+    <div class="test-content" id="test1">
+        <p>Mayor Neal Linnartz announced his re-election campaign yesterday. Michael French and Bradley Porter are also running for mayor. The candidates will face off in the May election.</p>
+    </div>
+    
+    <div class="test-content" id="test2">
+        <p>County Commissioner Jen Crownover spoke at the meeting. Carrie Isaac introduced a new bill in the state legislature. Donna Campbell also supports the measure.</p>
+    </div>
+    
+    <div class="test-content" id="test3">
+        <p>The race features Angela Allen and Jonathon Frazier as additional mayoral candidates. City Council members like Toni Carter and Michael Capizzi have endorsed different candidates.</p>
+    </div>
+
+    <script src="js/utils.js?v=9"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Testing auto-linking functionality...');
+            
+            // Initialize auto-linking
+            try {
+                await initAutoLinking(['.test-content'], '');
+                console.log('Auto-linking initialized successfully!');
+            } catch (error) {
+                console.error('Auto-linking failed:', error);
+            }
+        });
+    </script>
+</body>
+</html>

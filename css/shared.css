@@ -56,6 +56,22 @@ img { max-width: 100%; height: auto; }
 a { color: var(--red); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* ── Auto-linked Candidate Names ── */
+.auto-link.candidate-link {
+    color: var(--navy);
+    font-weight: 600;
+    border-bottom: 1px dotted var(--gold);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.auto-link.candidate-link:hover {
+    color: var(--red);
+    border-bottom-color: var(--red);
+    background-color: rgba(178, 34, 52, 0.05);
+    text-decoration: none;
+}
+
 /* Auto-linked candidate names */
 .auto-candidate-link {
     color: var(--navy) !important;

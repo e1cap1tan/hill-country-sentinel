@@ -114,6 +114,13 @@ async function initProfileFeed(options) {
         var entries = await fetcher(feedUrl);
         var filtered = filterByCandidate(entries, slug);
         renderProfileFeed(filtered, container);
+
+        // Initialize auto-linking for profile content
+        setTimeout(function() {
+            if (typeof initAutoLinking === 'function') {
+                initAutoLinking(['#candidate-activity', '.section'], '../');
+            }
+        }, 500);
     } catch (err) {
         container.innerHTML = '<p class="no-activity">Unable to load recent activity.</p>';
     }
