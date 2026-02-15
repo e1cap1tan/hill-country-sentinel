@@ -145,19 +145,21 @@ Before writing an original article, thoroughly research to gather:
 1. **Site chrome** (header, nav, footer, branding): Woodcut/ink illustration style, sepia/navy/red palette
 2. **Article header images**: **Watercolor paint style** — soft washes, visible brush strokes, muted warm palette reminiscent of vintage Texas Hill Country watercolor paintings. Think traditional watercolor illustration, NOT photorealistic.
 
-### Image Content Rules (CRITICAL — HARD RULES)
+### Image Content Rules (UPDATED Feb 14, 2026)
 
-**NEVER generate AI images that depict:**
-- ❌ Real people (named individuals, candidates, officials)
-- ❌ Real businesses by name (Cooper's Pit BBQ, specific restaurants, shops)
-- ❌ Real locations rendered as if they're photographs
-- ❌ Photorealistic scenes of identifiable real places
+**For watercolor/paint-style images (all article headers):**
+- ✅ CAN depict real people based on their likeness
+- ✅ CAN depict real places, landmarks, and buildings
+- ✅ CAN include signage with real names
+- ✅ Watercolor paint style — soft washes, visible brush strokes, muted warm palette
+
+**For photorealistic images (NOT used for articles, but rule exists):**
+- ❌ Do NOT depict real people, real businesses, or real locations in photorealistic style
 
 **ALWAYS use:**
-- ✅ Generic symbolic/thematic imagery (e.g., a watercolor of a generic Texas town hall, a river landscape, rolling hills)
-- ✅ Abstract or conceptual representations of the article topic
-- ✅ Generic scenes that evoke the topic without depicting specific real people/places
-- ✅ Watercolor style that is clearly artistic, not photorealistic
+- ✅ Watercolor paint style for all article header images
+- ✅ Imagery grounded in the actual subject of the article
+- ✅ Real candidate likenesses, real buildings, real signage where relevant
 
 **Example prompts:**
 - Article about a town hall meeting: "Watercolor painting of a generic small-town community meeting inside a rustic Texas hall, warm muted tones, visible brush strokes, no specific people or signage"
