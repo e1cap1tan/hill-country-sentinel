@@ -650,8 +650,7 @@ a.feed-entry-link .feed-entry {
 
 .article-hero-image img {
     width: 100%;
-    height: 280px;
-    object-fit: cover;
+    height: auto;
     display: block;
     transition: transform 0.3s ease;
 }
@@ -803,6 +802,60 @@ a.feed-entry-link .feed-entry {
     flex-wrap: wrap;
     gap: 10px;
 }
+
+/* ── Take Action Resources ── */
+.take-action {
+    background: linear-gradient(135deg, #faf6f0 0%, #f0ebe3 100%);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin: 36px 0;
+}
+.take-action h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.take-action h3::before {
+    content: '📢';
+    font-size: 24px;
+}
+.take-action ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.take-action li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    font-size: 15px;
+    line-height: 1.6;
+}
+.take-action li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.take-action a {
+    color: var(--red);
+    font-weight: 600;
+    text-decoration: none;
+}
+.take-action a:hover {
+    text-decoration: underline;
+}
+.take-action .resource-label {
+    font-weight: 600;
+    color: var(--navy);
+}
+.take-action .resource-phone::before { content: '📞 '; }
+.take-action .resource-email::before { content: '📧 '; }
+.take-action .resource-web::before { content: '🔗 '; }
+.take-action .resource-address::before { content: '📍 '; }
+.take-action .resource-date::before { content: '📅 '; }
 
 /* ── Responsive Breakpoints ── */
 @media (max-width: 900px) {

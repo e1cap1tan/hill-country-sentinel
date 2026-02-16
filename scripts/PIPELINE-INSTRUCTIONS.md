@@ -149,7 +149,7 @@ Before writing an original article, thoroughly research to gather:
 **Append this exact style suffix to EVERY article image prompt:**
 
 ```
-Soft watercolor painting style. Warm washes of sepia, muted gold, and dusty blue. Loose, impressionistic brushwork with visible paper texture and color bleeds. The edges of the painting gradually fade to pure white, with soft watercolor washes dissolving seamlessly into a clean white background on all sides. No hard borders, frames, or sharp edges.
+A wide panoramic scene (16:9 aspect ratio, landscape orientation). Soft watercolor painting style. Warm washes of sepia, muted gold, and dusty blue. Loose, impressionistic brushwork with visible paper texture and color bleeds. The edges of the painting gradually fade to pure white, with soft watercolor washes dissolving seamlessly into a clean white background on all sides. No hard borders, frames, or sharp edges.
 ```
 
 ### Image Generation Tool
@@ -209,6 +209,40 @@ cd tools/gemini-image
 
 <p>The discussion has taken place primarily on social media platforms, with residents debating the role of businesses in social issues...</p>
 ```
+
+## Take Action Resources Section (MANDATORY)
+
+Every original article MUST include a "Take Action" section before the footer. This gives voters actionable resources related to the article content.
+
+### HTML Format:
+```html
+<section class="take-action">
+    <h3>Take Action</h3>
+    <ul>
+        <li><span class="resource-web"></span><span class="resource-label">Website:</span> <a href="https://example.com" target="_blank" rel="noopener">Example Agency</a></li>
+        <li><span class="resource-phone"></span><span class="resource-label">Phone:</span> <a href="tel:+18305551234">(830) 555-1234</a></li>
+        <li><span class="resource-email"></span><span class="resource-label">Email:</span> <a href="mailto:info@example.com">info@example.com</a></li>
+        <li><span class="resource-address"></span><span class="resource-label">Address:</span> 150 N Seguin Ave, New Braunfels, TX 78130</li>
+        <li><span class="resource-date"></span><span class="resource-label">Next Meeting:</span> March 3, 2026 at 9:00 AM</li>
+    </ul>
+</section>
+```
+
+### What to include (research and verify):
+- Government office websites, phone numbers, email addresses
+- Public comment/feedback forms
+- Meeting dates and locations
+- Voter registration links
+- Relevant elected officials' contact info
+- Filing deadlines, early voting dates
+- Any URL that helps voters act on the information
+
+### Resource types (CSS classes):
+- `resource-web` — website links
+- `resource-phone` — phone numbers (use `tel:` links)
+- `resource-email` — email addresses (use `mailto:` links)
+- `resource-address` — physical addresses
+- `resource-date` — dates, deadlines, meeting times
 
 ## Quality Checklist
 

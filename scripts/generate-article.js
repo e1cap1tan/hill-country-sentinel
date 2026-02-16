@@ -55,7 +55,7 @@ async function generateArticleImage(slug, title, tags) {
         // Create image prompt based on article title and tags
         const tagsForPrompt = tags ? tags.split(',').map(t => t.trim()).join(', ') : '';
         const styleSuffix = 'Soft watercolor painting style. Warm washes of sepia, muted gold, and dusty blue. Loose, impressionistic brushwork with visible paper texture and color bleeds. The edges of the painting gradually fade to pure white, with soft watercolor washes dissolving seamlessly into a clean white background on all sides. No hard borders, frames, or sharp edges.';
-        const prompt = `A scene depicting: ${title}. ${tagsForPrompt ? `Related to: ${tagsForPrompt}. ` : ''}Texas Hill Country setting. ${styleSuffix}`;
+        const prompt = `A wide panoramic scene (16:9 aspect ratio, landscape orientation) depicting: ${title}. ${tagsForPrompt ? `Related to: ${tagsForPrompt}. ` : ''}Texas Hill Country setting. ${styleSuffix}`;
         
         const imagePath = path.join(__dirname, '..', 'articles', 'images', `${slug}.png`);
         const imageGeneratorPath = path.join(__dirname, '..', '..', '..', 'tools', 'gemini-image', 'generate.sh');
@@ -79,7 +79,7 @@ async function generateArticleImage(slug, title, tags) {
 }
 
 async function generateArticle(options) {
-    const { slug, title, date, body, tags, sources } = options;
+    const { slug, title, date, body, tags, sources, resources } = options;
     
     // Validate required fields
     if (!slug || !title || !date || !body) {
@@ -118,6 +118,13 @@ async function generateArticle(options) {
     template = template.replace(/{{DATE_FORMATTED}}/g, dateFormatted);
     template = template.replace(/{{BODY}}/g, body);
     template = template.replace(/{{HERO_IMAGE}}/g, heroImageHtml);
+    
+    // Handle Take Action resources section
+    if (resources) {
+        template = template.replace(/{{TAKE_ACTION}}/g, resources);
+    } else {
+        template = template.replace(/\s*{{TAKE_ACTION}}/g, '');
+    }
     
     // Handle sources section
     if (parsedSources.length > 0) {
