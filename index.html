@@ -505,6 +505,10 @@
             border-left: 4px solid var(--gold);
             background: linear-gradient(90deg, #FFFBEB, var(--white));
         }
+        .calendar-item.past {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
 
         .cal-date {
             font-family: 'Playfair Display', serif;
@@ -875,14 +879,33 @@
             });
 
         function renderAlertBanner(data) {
-            var upcoming = (data.election_calendar || []).filter(function (e) { return e.upcoming; });
-            if (upcoming.length > 0) {
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            var events = data.election_calendar || [];
+            var next = null;
+            for (var i = 0; i < events.length; i++) {
+                var e = events[i];
+                // Use end_iso for multi-day events (e.g. early voting period), otherwise iso
+                var endDate = new Date((e.end_iso || e.iso) + 'T23:59:59');
+                if (endDate >= today) { next = e; break; }
+            }
+            if (next) {
+                var startDate = new Date(next.iso + 'T00:00:00');
+                var isActive = next.end_iso && startDate <= today;
+                var icon = isActive ? '🗳️' : '📅';
+                var prefix = isActive ? 'HAPPENING NOW: ' : 'Coming Up: ';
+                var suffix = isActive ? 'Make your voice heard!' : 'Mark your calendar!';
+                // Days until
+                var daysUntil = Math.ceil((startDate - today) / 86400000);
+                if (!isActive && daysUntil > 0 && daysUntil <= 30) {
+                    suffix = daysUntil === 1 ? 'Tomorrow!' : daysUntil + ' days away — mark your calendar!';
+                }
                 document.getElementById('alert-banner').innerHTML =
                     '<div class="alert-banner">' +
-                    '  <div class="alert-icon">🗳️</div>' +
+                    '  <div class="alert-icon">' + icon + '</div>' +
                     '  <div class="alert-text">' +
-                    '    <h3>Upcoming: ' + upcoming[0].event + '</h3>' +
-                    '    <p>' + upcoming[0].date + ' — Mark your calendars and make your voice heard!</p>' +
+                    '    <h3>' + prefix + next.event + '</h3>' +
+                    '    <p>' + next.date + ' — ' + suffix + '</p>' +
                     '  </div>' +
                     '</div>';
             }
@@ -890,9 +913,16 @@
 
         function renderElectionCalendar(data) {
             var calEl = document.getElementById('election-calendar');
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            var foundNext = false;
             var html = '';
             (data.election_calendar || []).forEach(function (item) {
-                var cls = item.upcoming ? 'calendar-item upcoming' : 'calendar-item';
+                var endDate = new Date((item.end_iso || item.iso) + 'T23:59:59');
+                var isPast = endDate < today;
+                var cls = 'calendar-item';
+                if (!isPast && !foundNext) { cls += ' upcoming'; foundNext = true; }
+                else if (isPast) { cls += ' past'; }
                 html += '<div class="' + cls + '">' +
                     '<div class="cal-date">' + item.date + '</div>' +
                     '<div class="cal-event">' + item.event + '</div>' +
