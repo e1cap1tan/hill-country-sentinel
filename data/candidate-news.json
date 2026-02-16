@@ -14,7 +14,8 @@
       "tom-clark",
       "2026-election",
       "incumbent"
-    ]
+    ],
+    "image": "images/thumbs/cn-1771023777416-tom-clark-seeks-fourth-term-as-justice-of-peace-precinct-1.jpg"
   },
   {
     "id": "cn-1771005008581-michael-french-draws-45-to-first-mayoral-town-hall",
@@ -61,7 +62,8 @@
       "republican-primary",
       "statewide",
       "2026"
-    ]
+    ],
+    "image": "images/thumbs/cn-1770997423382-christi-craddick-campaigns-for-texas-comptroller-in-republic.jpg"
   },
   {
     "id": "cn-1770997416945-comal-county-clerk-race-four-republicans-compete-in-march-3-",
@@ -77,7 +79,8 @@
       "leann-miller",
       "2026",
       "comal-county"
-    ]
+    ],
+    "image": "images/thumbs/cn-1770997416945-comal-county-clerk-race-four-republicans-compete-in-march-3-.jpg"
   },
   {
     "id": "cn-1770997410907-former-mlb-star-mark-teixeira-campaigns-for-tx-21-congressio",
@@ -143,7 +146,8 @@
       "cybersecurity",
       "technology",
       "2026-election"
-    ]
+    ],
+    "image": "images/thumbs/cn-1770937286104-new-braunfels-software-engineer-paul-rojas-runs-for-us-house.jpg"
   },
   {
     "id": "cn-1770921923336-comal-county-commissioner-jen-crownover-named-vp-of-texas-as",
@@ -176,7 +180,8 @@
       "county-judge",
       "2026-election",
       "vacancy"
-    ]
+    ],
+    "image": "images/thumbs/cn-1770921846507-comal-county-judge-candidates-profile-available.jpg"
   },
   {
     "id": "cn-1770921832718-comal-county-commissioner-precinct-2-candidates-announced",
@@ -191,7 +196,8 @@
       "commissioner",
       "precinct-2",
       "2026-election"
-    ]
+    ],
+    "image": "images/thumbs/cn-1770921832718-comal-county-commissioner-precinct-2-candidates-announced.jpg"
   },
   {
     "id": "cn-001",
@@ -206,7 +212,8 @@
       "county-judge",
       "vacancy",
       "commissioners-court"
-    ]
+    ],
+    "image": "images/thumbs/cn-001.jpg"
   },
   {
     "id": "cn-002",
@@ -222,7 +229,8 @@
       "new-braunfels",
       "2026-election"
     ],
-    "relatedCandidate": "neal-linnartz"
+    "relatedCandidate": "neal-linnartz",
+    "image": "images/thumbs/cn-002.jpg"
   },
   {
     "id": "cn-003",

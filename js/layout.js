@@ -26,8 +26,7 @@
     var NAV_LINKS = [
         { label: 'Home', href: 'index.html' },
         { label: 'News', href: 'feeds/news.html' },
-        { label: 'Candidates', href: 'feeds/candidates.html' },
-        { label: 'Policy', href: 'feeds/policy.html' },
+        { label: 'Races', href: 'feeds/candidates.html' },
         { label: 'Business Watch', href: 'feeds/business.html' }
     ];
 
@@ -37,16 +36,76 @@
             return '<li><a href="' + base + link.href + '">' + link.label + '</a></li>';
         }).join('\n            ');
 
-        return '<div class="top-bar">Hill Country Sentinel &mdash; Informed Voters. Accountable Leaders.</div>\n' +
-            '<nav>\n' +
+        return '<nav class="sticky-header">\n' +
             '  <div class="nav-inner">\n' +
-            '    <a href="' + base + 'index.html" class="logo">Hill Country <span>Sentinel</span></a>\n' +
+            '    <div class="header-left">\n' +
+            '      <img src="' + base + 'images/courthouse-header.png" alt="Comal County Courthouse" class="courthouse-icon">\n' +
+            '      <a href="' + base + 'index.html" class="site-title">Hill Country Sentinel</a>\n' +
+            '    </div>\n' +
             '    <ul class="nav-links" id="nav-links">\n' +
             '        ' + linksHtml + '\n' +
             '    </ul>\n' +
             '    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">&#9776;</button>\n' +
             '  </div>\n' +
-            '</nav>';
+            '</nav>\n' +
+            renderBreadcrumbs();
+    }
+
+    function renderBreadcrumbs() {
+        var base = getBase();
+        var path = window.location.pathname;
+        var breadcrumbs = [];
+
+        // Always start with Home
+        breadcrumbs.push({ label: 'Home', href: base + 'index.html' });
+
+        // Detect current page and build breadcrumbs
+        if (path.includes('/feeds/news.html')) {
+            breadcrumbs.push({ label: 'News', href: null });
+        } else if (path.includes('/feeds/candidates.html')) {
+            breadcrumbs.push({ label: 'Races', href: null });
+        } else if (path.includes('/feeds/business.html')) {
+            breadcrumbs.push({ label: 'Business Watch', href: null });
+        } else if (path.includes('/articles/')) {
+            // For article pages, check for category meta tag
+            var categoryMeta = document.querySelector('meta[name="article-category"]');
+            var category = categoryMeta ? categoryMeta.getAttribute('content') : 'News';
+            var articleTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : 'Article';
+            
+            // Add category breadcrumb
+            if (category === 'candidate-news') {
+                breadcrumbs.push({ label: 'News', href: base + 'feeds/news.html' });
+                breadcrumbs.push({ label: 'Races', href: base + 'feeds/candidates.html' });
+            } else if (category === 'policy-feed') {
+                breadcrumbs.push({ label: 'News', href: base + 'feeds/news.html' });
+                breadcrumbs.push({ label: 'Policy', href: null });
+            } else if (category === 'business-watch') {
+                breadcrumbs.push({ label: 'Business Watch', href: base + 'feeds/business.html' });
+            } else {
+                breadcrumbs.push({ label: 'News', href: base + 'feeds/news.html' });
+            }
+            
+            // Add article title (truncated)
+            if (articleTitle.length > 50) {
+                articleTitle = articleTitle.substring(0, 50) + '...';
+            }
+            breadcrumbs.push({ label: articleTitle, href: null });
+        }
+
+        // Don't render breadcrumbs on homepage
+        if (breadcrumbs.length <= 1) return '';
+
+        var breadcrumbsHtml = breadcrumbs.map(function(crumb, index) {
+            if (crumb.href) {
+                return '<a href="' + crumb.href + '">' + crumb.label + '</a>';
+            } else {
+                return '<span>' + crumb.label + '</span>';
+            }
+        }).join(' › ');
+
+        return '<div class="breadcrumbs">\n' +
+               '  <div class="breadcrumbs-inner">' + breadcrumbsHtml + '</div>\n' +
+               '</div>';
     }
 
     function renderFooter() {

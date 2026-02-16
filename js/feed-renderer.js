@@ -58,6 +58,46 @@ function formatCategory(category) {
 }
 
 /**
+ * Get fallback thumbnail image path based on entry category/type
+ * @param {object} entry - Feed entry object  
+ * @returns {string} Path to fallback icon
+ */
+function getFallbackThumbnail(entry) {
+    // Detect base path for images (same logic as layout.js)
+    const getBase = function() {
+        if (typeof window === 'undefined') return '';
+        var path = window.location.pathname;
+        var isGitHubPages = window.location.hostname.includes('github.io');
+        var baseProject = isGitHubPages ? '/hill-country-sentinel/' : '/';
+        
+        // If in articles/archive/ (two levels deep), go up two levels
+        if (path.match(/\/articles\/archive\//i)) return '../../';
+        // If in a subdirectory like /hill-country-sentinel/feeds/, go up one level
+        if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
+            return isGitHubPages ? '../' : '../';
+        }
+        // If we're at the root level on GitHub Pages, include the project base
+        return isGitHubPages && !path.includes('/hill-country-sentinel/') ? baseProject : '';
+    };
+    
+    const base = getBase();
+    
+    // Check entry category or feed source
+    if (entry.category === 'candidate-news' || 
+        (entry.source && entry.source.toLowerCase().includes('candidate'))) {
+        return base + 'images/icon-candidate.png';
+    } else if (entry.category === 'policy-feed' || 
+               (entry.source && entry.source.toLowerCase().includes('policy'))) {
+        return base + 'images/icon-policy.png';
+    } else if (entry.category === 'business-watch' || 
+               (entry.source && entry.source.toLowerCase().includes('business'))) {
+        return base + 'images/icon-business.png';
+    } else {
+        return base + 'images/icon-news.png';
+    }
+}
+
+/**
  * Render a single feed card as an HTML string.
  * @param {object} entry - Feed entry object
  * @returns {string} HTML string for the feed card
@@ -82,11 +122,11 @@ function renderFeedCard(entry) {
     const sourceName = escapeHtml(entry.source || 'Source');
     const sourceUrl = entry.sourceUrl ? escapeHtml(entry.sourceUrl) : '';
 
-    const thumbnailImage = entry.image 
-        ? `<div class="entry-thumbnail">
-            <img src="${escapeHtml(entry.image)}" alt="${escapeHtml(entry.title || '')}" />
-           </div>`
-        : '';
+    // Determine thumbnail image - use entry.image if available, otherwise fallback
+    const thumbnailSrc = entry.image ? escapeHtml(entry.image) : getFallbackThumbnail(entry);
+    const thumbnailImage = `<div class="entry-thumbnail">
+        <img src="${thumbnailSrc}" alt="${escapeHtml(entry.title || '')}" />
+       </div>`;
 
     const cardInner = `${thumbnailImage}<div class="entry-content">
         <div class="entry-date">${escapeHtml(dateStr)}</div>
@@ -99,7 +139,11 @@ function renderFeedCard(entry) {
     </div>`;
 
     if (sourceUrl) {
-        return `<a href="${sourceUrl}" target="_blank" rel="noopener" class="feed-entry-link"><article class="feed-entry" data-id="${escapeHtml(entry.id || '')}">
+        // Check if this is an external URL
+        const isExternal = sourceUrl.startsWith('http://') || sourceUrl.startsWith('https://');
+        const targetAttrs = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+        
+        return `<a href="${sourceUrl}"${targetAttrs} class="feed-entry-link"><article class="feed-entry" data-id="${escapeHtml(entry.id || '')}">
     ${cardInner}
 </article></a>`;
     }
@@ -147,6 +191,70 @@ function renderFeedPreview(entries, containerEl, limit, viewAllUrl) {
     return html;
 }
 
+/**
+ * Render a candidate/official card with circular photo
+ * @param {object} candidate - Candidate/official object with name, photo, status, etc.
+ * @returns {string} HTML string for the candidate card
+ */
+function renderCandidateCard(candidate) {
+    // Detect base path for images (same logic as layout.js)
+    const getBase = function() {
+        if (typeof window === 'undefined') return '';
+        var path = window.location.pathname;
+        var isGitHubPages = window.location.hostname.includes('github.io');
+        var baseProject = isGitHubPages ? '/hill-country-sentinel/' : '/';
+        
+        // If in articles/archive/ (two levels deep), go up two levels
+        if (path.match(/\/articles\/archive\//i)) return '../../';
+        // If in a subdirectory like /hill-country-sentinel/feeds/, go up one level
+        if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
+            return isGitHubPages ? '../' : '../';
+        }
+        // If we're at the root level on GitHub Pages, include the project base
+        return isGitHubPages && !path.includes('/hill-country-sentinel/') ? baseProject : '';
+    };
+    
+    const base = getBase();
+    const photoSrc = candidate.photo 
+        ? escapeHtml(candidate.photo) 
+        : base + 'images/default-person.png';
+    
+    const incumbentClass = candidate.incumbent ? ' incumbent' : '';
+    const incumbentBadge = candidate.incumbent 
+        ? '<span class="badge incumbent">Incumbent</span>' 
+        : '';
+    
+    const profileLink = candidate.slug 
+        ? `<a href="${base}profiles/${escapeHtml(candidate.slug)}.html">${escapeHtml(candidate.name)}</a>`
+        : escapeHtml(candidate.name);
+
+    return `<div class="card candidate-card${incumbentClass}">
+        <div class="avatar">
+            <img src="${photoSrc}" alt="${escapeHtml(candidate.name)}" />
+        </div>
+        <div class="name">${profileLink}</div>
+        <div class="status">${escapeHtml(candidate.status || '')}</div>
+        ${incumbentBadge}
+    </div>`;
+}
+
+/**
+ * Render a list of candidates into a grid
+ * @param {Array} candidates - Array of candidate objects
+ * @param {HTMLElement|null} containerEl - DOM element to render into (if null, returns HTML string)
+ * @returns {string} The rendered HTML
+ */
+function renderCandidateGrid(candidates, containerEl) {
+    const html = `<div class="cards-grid candidate-grid">
+        ${candidates.map(candidate => renderCandidateCard(candidate)).join('\n        ')}
+    </div>`;
+    
+    if (containerEl && typeof containerEl === 'object' && 'innerHTML' in containerEl) {
+        containerEl.innerHTML = html;
+    }
+    return html;
+}
+
 // Export for Node.js (tests), no-op in browser
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -156,6 +264,9 @@ if (typeof module !== 'undefined' && module.exports) {
         formatCategory,
         renderFeedCard,
         renderFeedList,
-        renderFeedPreview
+        renderFeedPreview,
+        getFallbackThumbnail,
+        renderCandidateCard,
+        renderCandidateGrid
     };
 }
