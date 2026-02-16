@@ -58,29 +58,29 @@ function formatCategory(category) {
 }
 
 /**
+ * Detect base path for resolving relative URLs (same logic as layout.js getBase).
+ * @returns {string} Base path prefix
+ */
+function getFeedBase() {
+    if (typeof window === 'undefined') return '';
+    var path = window.location.pathname;
+    var isGitHubPages = window.location.hostname.includes('github.io');
+    var baseProject = isGitHubPages ? '/hill-country-sentinel/' : '/';
+    
+    if (path.match(/\/articles\/archive\//i)) return '../../';
+    if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
+        return isGitHubPages ? '../' : '../';
+    }
+    return isGitHubPages && !path.includes('/hill-country-sentinel/') ? baseProject : '';
+}
+
+/**
  * Get fallback thumbnail image path based on entry category/type
  * @param {object} entry - Feed entry object  
  * @returns {string} Path to fallback icon
  */
 function getFallbackThumbnail(entry) {
-    // Detect base path for images (same logic as layout.js)
-    const getBase = function() {
-        if (typeof window === 'undefined') return '';
-        var path = window.location.pathname;
-        var isGitHubPages = window.location.hostname.includes('github.io');
-        var baseProject = isGitHubPages ? '/hill-country-sentinel/' : '/';
-        
-        // If in articles/archive/ (two levels deep), go up two levels
-        if (path.match(/\/articles\/archive\//i)) return '../../';
-        // If in a subdirectory like /hill-country-sentinel/feeds/, go up one level
-        if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
-            return isGitHubPages ? '../' : '../';
-        }
-        // If we're at the root level on GitHub Pages, include the project base
-        return isGitHubPages && !path.includes('/hill-country-sentinel/') ? baseProject : '';
-    };
-    
-    const base = getBase();
+    const base = getFeedBase();
     
     // Check entry category or feed source
     if (entry.category === 'candidate-news' || 
@@ -123,7 +123,14 @@ function renderFeedCard(entry) {
     const sourceUrl = entry.sourceUrl ? escapeHtml(entry.sourceUrl) : '';
 
     // Determine thumbnail image - use entry.image if available, otherwise fallback
-    const thumbnailSrc = entry.image ? escapeHtml(entry.image) : getFallbackThumbnail(entry);
+    // Prepend base path for relative image URLs (needed when rendered from feeds/ subdirectory)
+    let thumbnailSrc;
+    if (entry.image) {
+        const isAbsoluteUrl = entry.image.startsWith('http://') || entry.image.startsWith('https://') || entry.image.startsWith('data:');
+        thumbnailSrc = isAbsoluteUrl ? escapeHtml(entry.image) : escapeHtml(getFeedBase() + entry.image);
+    } else {
+        thumbnailSrc = getFallbackThumbnail(entry);
+    }
     const thumbnailImage = `<div class="entry-thumbnail">
         <img src="${thumbnailSrc}" alt="${escapeHtml(entry.title || '')}" />
        </div>`;
@@ -197,26 +204,10 @@ function renderFeedPreview(entries, containerEl, limit, viewAllUrl) {
  * @returns {string} HTML string for the candidate card
  */
 function renderCandidateCard(candidate) {
-    // Detect base path for images (same logic as layout.js)
-    const getBase = function() {
-        if (typeof window === 'undefined') return '';
-        var path = window.location.pathname;
-        var isGitHubPages = window.location.hostname.includes('github.io');
-        var baseProject = isGitHubPages ? '/hill-country-sentinel/' : '/';
-        
-        // If in articles/archive/ (two levels deep), go up two levels
-        if (path.match(/\/articles\/archive\//i)) return '../../';
-        // If in a subdirectory like /hill-country-sentinel/feeds/, go up one level
-        if (path.match(/\/feeds\//i) || path.match(/\/profiles\//i) || path.match(/\/articles\//i)) {
-            return isGitHubPages ? '../' : '../';
-        }
-        // If we're at the root level on GitHub Pages, include the project base
-        return isGitHubPages && !path.includes('/hill-country-sentinel/') ? baseProject : '';
-    };
-    
-    const base = getBase();
+    const base = getFeedBase();
+    const isAbsolutePhoto = candidate.photo && (candidate.photo.startsWith('http://') || candidate.photo.startsWith('https://'));
     const photoSrc = candidate.photo 
-        ? escapeHtml(candidate.photo) 
+        ? escapeHtml(isAbsolutePhoto ? candidate.photo : base + candidate.photo) 
         : base + 'images/default-person.png';
     
     const incumbentClass = candidate.incumbent ? ' incumbent' : '';
