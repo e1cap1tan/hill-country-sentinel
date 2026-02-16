@@ -54,7 +54,7 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
 img { max-width: 100%; height: auto; }
 
 a { color: var(--red); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a:hover { text-decoration: none; }
 
 /* ── Auto-linked Candidate Names ── */
 .auto-link.candidate-link {
@@ -214,6 +214,7 @@ nav .nav-links a:hover::after {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     border-color: var(--red-light);
+    background: rgba(0,0,0,0.02);
 }
 
 .card::before {
@@ -344,6 +345,7 @@ a.feed-entry-link .feed-entry {
 
 .feed-entry:hover {
     border-color: var(--red-light);
+    background: rgba(0,0,0,0.02);
 }
 
 .feed-entry::before {
