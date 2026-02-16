@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="article-category" content="{{CATEGORY}}">
+    <meta name="article-category" content="candidate-news">
     <title>Michael French Draws 45 to First Mayoral Town Hall — Hill Country Sentinel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,10 +14,10 @@
 
     <article class="article-container">
         <header class="article-header">
-{{HERO_IMAGE}}
+<div class="article-hero-image"><img src="images/michael-french-draws-45-to-first-mayoral-town-hall.png" alt="Michael French Draws 45 to First Mayoral Town Hall"></div>
             <h1>Michael French Draws 45 to First Mayoral Town Hall</h1>
             <div class="article-meta">
-                <time datetime="{{DATE_ISO}}">{{DATE_FORMATTED}}</time>
+                <time datetime="2026-02-16">February 16, 2026</time>
                 <span class="article-author">By Hill Country Sentinel Staff</span>
             </div>
         </header>
@@ -38,31 +38,16 @@
 <p>For residents, the town hall offered a first glimpse into French’s priorities and style as a candidate. While some left impressed by his preparedness, others, like retiree John Keller, remained undecided. “He’s got good ideas, but I want to hear from the others before I make up my mind,” Keller said. With several weeks of campaigning ahead, French and his opponents will have plenty of opportunities to sway voters in this pivotal election for New Braunfels.</p>
         </div>
 
-        {{TAKE_ACTION}}
+        
 
         <footer class="article-footer">
-            {{#if SOURCES}}
-            <section class="article-sources">
-                <h3>Sources</h3>
-                <ul>
-                    {{#each SOURCES}}
-                    {{#if url}}
-                    <li><a href="{{url}}" target="_blank" rel="noopener">{{name}}</a></li>
-                    {{else}}
-                    <li>{{name}}</li>
-                    {{/if}}
+            
                     {{/each}}
                 </ul>
             </section>
             {{/if}}
 
-            {{#if TAGS}}
-            <section class="article-tags">
-                {{#each TAGS}}
-                <span class="tag">{{.}}</span>
-                {{/each}}
-            </section>
-            {{/if}}
+            
         </footer>
     </article>
 
