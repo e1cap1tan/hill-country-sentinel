@@ -457,19 +457,21 @@
                 }).addTo(map);
             }
             
-            // Render NB city council boundaries (light blue)
+            // Render NB city council boundaries (steel blue)
             if (geoData.nbCityCouncil) {
                 boundaryLayers.nbCityCouncil = L.geoJSON(geoData.nbCityCouncil, {
                     style: {
-                        fillColor: '#4A90E2',
-                        weight: 2,
-                        opacity: 0.8,
-                        color: '#4A90E2',
-                        fillOpacity: 0.1
+                        fillColor: '#2A6099',
+                        weight: 1.5,
+                        opacity: 1,
+                        color: '#2A6099',
+                        fillOpacity: 0.15
                     },
                     onEachFeature: function(feature, layer) {
                         if (feature.properties) {
-                            layer.bindPopup('New Braunfels City Limits');
+                            const district = feature.properties.District;
+                            const repName = feature.properties.Rep_Name;
+                            layer.bindPopup(`District ${district}<br>Rep: ${repName}`);
                         }
                     }
                 }).addTo(map);
@@ -558,11 +560,18 @@
                 }
             }
             
-            // Check if within NB city limits
+            // Check if within NB city council district
             if (geoData.nbCityCouncil) {
                 for (const feature of geoData.nbCityCouncil.features) {
                     if (turf.booleanPointInPolygon(point, feature)) {
-                        results.nbCityCouncil = true;
+                        results.nbCityCouncil = {
+                            district: feature.properties.District,
+                            repName: feature.properties.Rep_Name,
+                            termExpiry: feature.properties.TermExpiry,
+                            councilEmail: feature.properties.CouncilEmail,
+                            mayorName: feature.properties.MayorName,
+                            mayorTermExpiry: feature.properties.MayorTermExpiry
+                        };
                         break;
                     }
                 }
@@ -575,6 +584,19 @@
             results.congressional = '21';
             
             return results;
+        }
+        
+        function getProfileSlug(repName) {
+            // Map representative names to profile slugs
+            const profileMap = {
+                'April Ryan': 'april-ryan',
+                'Toni L. Carter': 'toni-carter',
+                'D. Lee Edwards': 'd-lee-edwards',
+                'Lawrence Spradley': 'lawrence-spradley',
+                'Mary Ann Labowski': 'mary-ann-labowski',
+                'Michael Capizzi': 'michael-capizzi'
+            };
+            return profileMap[repName] || null;
         }
         
         function displayResults(address, coordinates) {
@@ -603,8 +625,31 @@
             
             // New Braunfels City Council
             if (districts.nbCityCouncil) {
-                html += createDistrictCard('🏛️', 'New Braunfels City Council', 
-                    'District mapping in progress - check city website', null, null, 'https://www.newbraunfels.gov/298/City-Council');
+                const councilInfo = districts.nbCityCouncil;
+                const profileSlug = getProfileSlug(councilInfo.repName);
+                const profileLink = profileSlug ? `profiles/${profileSlug}.html` : null;
+                const election = councilInfo.termExpiry === 'May 2026' ? 'May 2026' : null;
+                
+                html += createDistrictCard('🏙️', `New Braunfels City Council — District ${councilInfo.district}`, 
+                    `Rep: ${councilInfo.repName}, term expires ${councilInfo.termExpiry}`, null, election, profileLink);
+                
+                // Add Mayor card
+                const mayorProfileLink = `profiles/neal-linnartz.html`;
+                const mayorElection = councilInfo.mayorTermExpiry === 'May 2026' ? 'May 2026' : null;
+                
+                html += createDistrictCard('🎖️', 'Mayor of New Braunfels', 
+                    `${councilInfo.mayorName}, term expires ${councilInfo.mayorTermExpiry}`, null, mayorElection, mayorProfileLink);
+            } else if (districts.commissioner || districts.voting) {
+                // Address is in Comal County but outside NB city limits
+                html += `
+                    <div class="district-card" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                        <div class="district-header">
+                            <span class="district-icon">📍</span>
+                            <h3 class="district-title" style="color: #64748b;">Outside City Limits</h3>
+                        </div>
+                        <div style="color: #64748b; font-size: 0.95rem;">Your address is in unincorporated Comal County — not within New Braunfels city limits.</div>
+                    </div>
+                `;
             }
             
             // State House
@@ -701,6 +746,24 @@
                             fillOpacity: 0.4,
                             weight: 3
                         });
+                    }
+                });
+            }
+            
+            // Highlight city council district
+            if (geoData.nbCityCouncil && boundaryLayers.nbCityCouncil) {
+                boundaryLayers.nbCityCouncil.eachLayer(function(layer) {
+                    if (turf.booleanPointInPolygon(point, layer.feature)) {
+                        layer.setStyle({
+                            fillColor: '#2A6099',
+                            fillOpacity: 0.4,
+                            color: '#2A6099',
+                            weight: 2
+                        });
+                        // Open the tooltip to show district info
+                        const district = layer.feature.properties.District;
+                        const repName = layer.feature.properties.Rep_Name;
+                        layer.openPopup();
                     }
                 });
             }
