@@ -27,7 +27,8 @@
         { label: 'Home', href: 'index.html' },
         { label: 'News', href: 'feeds/news.html' },
         { label: 'Races', href: 'feeds/candidates.html' },
-        { label: 'Business Watch', href: 'feeds/business.html' }
+        { label: 'Business Watch', href: 'feeds/business.html' },
+        { label: 'Find My Officials', href: 'find-my-officials.html' }
     ];
 
     function renderNav() {
@@ -66,6 +67,8 @@
             breadcrumbs.push({ label: 'Races', href: null });
         } else if (path.includes('/feeds/business.html')) {
             breadcrumbs.push({ label: 'Business Watch', href: null });
+        } else if (path.includes('/find-my-officials.html') || path.includes('find-my-officials')) {
+            breadcrumbs.push({ label: 'Find My Officials', href: null });
         } else if (path.includes('/articles/')) {
             // For article pages, check for category meta tag
             var categoryMeta = document.querySelector('meta[name="article-category"]');

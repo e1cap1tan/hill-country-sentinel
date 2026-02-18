@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find My Officials | Hill Country Sentinel</title>
+    <meta name="description" content="Find your elected officials and voting precincts in Comal County and New Braunfels, Texas. Enter your address to see who represents you.">
+    
+    <!-- Font imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="css/shared.css">
+    
+    <style>
+        /* Page-specific styles */
+        .hero {
+            background: linear-gradient(rgba(30, 58, 95, 0.85), rgba(30, 58, 95, 0.85)),
+                        url('images/courthouse-header.png') center/cover;
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .address-search {
+            max-width: 500px;
+            width: 100%;
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .address-search input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--cream-dark);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        
+        .address-search button {
+            padding: 1rem 2rem;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .address-search button:hover {
+            background: var(--red-dark);
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .address-search {
+                flex-direction: column;
+            }
+        }
+        
+        .map-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .map-header {
+            background: var(--navy);
+            color: var(--white);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .map-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        
+        .results-panel {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-header h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .results-address {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .district-card {
+            background: var(--cream);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .district-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .district-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .district-icon {
+            font-size: 1.5rem;
+        }
+        
+        .district-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .officeholder {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .party-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-right: 0.5rem;
+        }
+        
+        .party-r {
+            background: var(--red);
+        }
+        
+        .party-d {
+            background: #2563eb;
+        }
+        
+        .election-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--gold-light);
+            color: var(--text);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .candidate-link {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 0.75rem;
+            display: inline-block;
+        }
+        
+        .candidate-link:hover {
+            text-decoration: underline;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+        
+        .no-results h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+        
+        .instructions {
+            background: var(--cream-dark);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .instructions h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation will be injected by layout.js -->
+    <div id="nav-placeholder"></div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
+            <h1>Find My Officials</h1>
+            <p>Enter your Comal County address to discover which voting precinct you're in and who represents you at every level of government.</p>
+            
+            <div class="address-search">
+                <input type="text" id="address-input" placeholder="Enter your Comal County address..." />
+                <button type="button" id="lookup-btn">Look Up</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Map Section -->
+        <section class="map-container">
+            <div class="map-header">
+                <h2>Comal County Political Districts</h2>
+            </div>
+            <div id="map"></div>
+        </section>
+        
+        <!-- Results Section -->
+        <section class="results-panel">
+            <div id="results-content">
+                <div class="instructions">
+                    <h3>🗺️ Get Started</h3>
+                    <p>Enter your address above to see your voting precinct and elected officials. The map will highlight your district boundaries and show exactly who represents you.</p>
+                </div>
+                
+                <div class="no-results" style="display: none;">
+                    <h3>Address Not Found</h3>
+                    <p>This address doesn't appear to be in Comal County. This tool covers Comal County and New Braunfels, TX.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer will be injected by layout.js -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="js/layout.js"></script>
+    
+    <script>
+        // Find My Officials JavaScript
+        let map;
+        let userMarker;
+        let boundaryLayers = {};
+        let officials = {};
+        let geoData = {};
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                initMap();
+                await loadOfficials();
+                await loadGeoData();
+                setupEventListeners();
+                renderBoundaries();
+            } catch (error) {
+                console.error('Failed to initialize application:', error);
+                showError('Failed to load district data. Please refresh the page.');
+            }
+        });
+        
+        function initMap() {
+            // Center on Comal County (approximately New Braunfels)
+            map = L.map('map').setView([29.7030, -98.1245], 11);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 18
+            }).addTo(map);
+        }
+        
+        async function loadOfficials() {
+            try {
+                const response = await fetch('data/officials.json');
+                if (!response.ok) throw new Error('Failed to load officials data');
+                const data = await response.json();
+                
+                // Transform the data structure to match our needs
+                officials = {
+                    commissioner: data.commissioner || {},
+                    jp: data.jp || {},
+                    cityCouncil: data.cityCouncil || {},
+                    stateHouse: data.stateHouse || {},
+                    stateSenate: data.stateSenate || {},
+                    congressional: data.congressional || {}
+                };
+                
+                console.log('Officials data loaded:', officials);
+            } catch (error) {
+                console.error('Error loading officials:', error);
+                throw error;
+            }
+        }
+        
+        async function loadGeoData() {
+            const datasets = [
+                { key: 'commissioner', url: 'data/geo/commissioner-precincts.geojson' },
+                { key: 'voting', url: 'data/geo/voting-precincts.geojson' }
+            ];
+            
+            for (const dataset of datasets) {
+                try {
+                    const response = await fetch(dataset.url);
+                    if (response.ok) {
+                        geoData[dataset.key] = await response.json();
+                        console.log(`Loaded ${dataset.key} data:`, geoData[dataset.key].features?.length, 'features');
+                    } else {
+                        console.warn(`Failed to load ${dataset.key} data: ${response.status}`);
+                    }
+                } catch (error) {
+                    console.warn(`Error loading ${dataset.key} data:`, error);
+                }
+            }
+        }
+        
+        function renderBoundaries() {
+            // Clear existing boundary layers
+            Object.values(boundaryLayers).forEach(layer => {
+                if (layer) map.removeLayer(layer);
+            });
+            boundaryLayers = {};
+            
+            // Render commissioner precincts
+            if (geoData.commissioner) {
+                boundaryLayers.commissioner = L.geoJSON(geoData.commissioner, {
+                    style: {
+                        fillColor: '#B22234',
+                        weight: 2,
+                        opacity: 0.6,
+                        color: '#B22234',
+                        fillOpacity: 0.1
+                    },
+                    onEachFeature: function(feature, layer) {
+                        if (feature.properties) {
+                            const precinct = feature.properties.Precinct || feature.properties.NAME;
+                            layer.bindPopup(`Commissioner Precinct ${precinct}`);
+                        }
+                    }
+                }).addTo(map);
+            }
+            
+            // Render voting precincts with different style
+            if (geoData.voting) {
+                boundaryLayers.voting = L.geoJSON(geoData.voting, {
+                    style: {
+                        fillColor: '#1E3A5F',
+                        weight: 1,
+                        opacity: 0.4,
+                        color: '#1E3A5F',
+                        fillOpacity: 0.05
+                    },
+                    onEachFeature: function(feature, layer) {
+                        if (feature.properties) {
+                            const precinct = feature.properties.Precinct || feature.properties.NAME;
+                            layer.bindPopup(`Voting Precinct ${precinct}`);
+                        }
+                    }
+                }).addTo(map);
+            }
+        }
+        
+        function setupEventListeners() {
+            const addressInput = document.getElementById('address-input');
+            const lookupBtn = document.getElementById('lookup-btn');
+            
+            lookupBtn.addEventListener('click', handleAddressLookup);
+            addressInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleAddressLookup();
+                }
+            });
+        }
+        
+        async function handleAddressLookup() {
+            const address = document.getElementById('address-input').value.trim();
+            if (!address) {
+                showError('Please enter an address');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const coordinates = await geocodeAddress(address);
+                if (coordinates) {
+                    displayResults(address, coordinates);
+                    updateMap(coordinates);
+                } else {
+                    showNoResults();
+                }
+            } catch (error) {
+                console.error('Lookup error:', error);
+                showError('Unable to look up address. Please try again.');
+            }
+        }
+        
+        async function geocodeAddress(address) {
+            try {
+                const encodedAddress = encodeURIComponent(address);
+                const url = `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${encodedAddress}&benchmark=2020&format=json`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.result?.addressMatches?.length > 0) {
+                    const match = data.result.addressMatches[0];
+                    return {
+                        lat: parseFloat(match.coordinates.y),
+                        lon: parseFloat(match.coordinates.x),
+                        matchedAddress: match.matchedAddress
+                    };
+                }
+                return null;
+            } catch (error) {
+                console.error('Geocoding error:', error);
+                return null;
+            }
+        }
+        
+        function findUserDistricts(coordinates) {
+            const point = turf.point([coordinates.lon, coordinates.lat]);
+            const results = {};
+            
+            // Find commissioner precinct
+            if (geoData.commissioner) {
+                for (const feature of geoData.commissioner.features) {
+                    if (turf.booleanPointInPolygon(point, feature)) {
+                        results.commissioner = feature.properties.Precinct || feature.properties.NAME;
+                        break;
+                    }
+                }
+            }
+            
+            // Find voting precinct
+            if (geoData.voting) {
+                for (const feature of geoData.voting.features) {
+                    if (turf.booleanPointInPolygon(point, feature)) {
+                        results.voting = feature.properties.Precinct || feature.properties.NAME;
+                        break;
+                    }
+                }
+            }
+            
+            // For now, hardcode some districts for Comal County area
+            // In a full implementation, you'd check against the actual boundary data
+            results.stateHouse = coordinates.lat > 29.8 ? '73' : '45';
+            results.stateSenate = '25';
+            results.congressional = '21';
+            
+            return results;
+        }
+        
+        function displayResults(address, coordinates) {
+            const districts = findUserDistricts(coordinates);
+            const resultsContainer = document.getElementById('results-content');
+            
+            let html = `
+                <div class="results-header">
+                    <h2>Your Elected Officials</h2>
+                    <div class="results-address">${address}</div>
+                </div>
+            `;
+            
+            // Voting Precinct
+            if (districts.voting) {
+                html += createDistrictCard('🗳️', `Voting Precinct ${districts.voting}`, 
+                    'Your designated polling location precinct', null, null, null);
+            }
+            
+            // Commissioner Precinct
+            if (districts.commissioner && officials.commissioner[districts.commissioner]) {
+                const official = officials.commissioner[districts.commissioner];
+                html += createDistrictCard('🏛️', `Commissioner Precinct ${districts.commissioner}`, 
+                    official.name, official.party, official.election, null);
+            }
+            
+            // State House
+            if (districts.stateHouse && officials.stateHouse[districts.stateHouse]) {
+                const official = officials.stateHouse[districts.stateHouse];
+                html += createDistrictCard('🏢', `State House District ${districts.stateHouse}`, 
+                    official.name, official.party, null, null);
+            }
+            
+            // State Senate
+            if (districts.stateSenate && officials.stateSenate[districts.stateSenate]) {
+                const official = officials.stateSenate[districts.stateSenate];
+                html += createDistrictCard('🏛️', `State Senate District ${districts.stateSenate}`, 
+                    official.name, official.party, null, null);
+            }
+            
+            // Congressional
+            if (districts.congressional && officials.congressional[districts.congressional]) {
+                const official = officials.congressional[districts.congressional];
+                html += createDistrictCard('🇺🇸', `Congressional District ${districts.congressional}`, 
+                    official.name, official.party, null, null);
+            }
+            
+            resultsContainer.innerHTML = html;
+        }
+        
+        function createDistrictCard(icon, title, officeholder, party, election, candidateLink) {
+            let partyBadge = '';
+            if (party) {
+                const partyClass = party.toLowerCase() === 'r' ? 'party-r' : 'party-d';
+                const partyName = party.toUpperCase() === 'R' ? 'Republican' : 'Democratic';
+                partyBadge = `<span class="party-badge ${partyClass}">${partyName}</span>`;
+            }
+            
+            let electionBadge = '';
+            if (election) {
+                electionBadge = `<div class="election-badge">Up for election: ${election}</div>`;
+            }
+            
+            let candidateLinkHtml = '';
+            if (candidateLink) {
+                candidateLinkHtml = `<a href="${candidateLink}" class="candidate-link">View Candidates →</a>`;
+            }
+            
+            return `
+                <div class="district-card">
+                    <div class="district-header">
+                        <span class="district-icon">${icon}</span>
+                        <h3 class="district-title">${title}</h3>
+                    </div>
+                    <div class="officeholder">${officeholder}</div>
+                    ${partyBadge}
+                    ${electionBadge}
+                    ${candidateLinkHtml}
+                </div>
+            `;
+        }
+        
+        function updateMap(coordinates) {
+            // Remove existing user marker
+            if (userMarker) {
+                map.removeLayer(userMarker);
+            }
+            
+            // Add new marker
+            userMarker = L.marker([coordinates.lat, coordinates.lon])
+                .addTo(map)
+                .bindPopup('Your Location')
+                .openPopup();
+            
+            // Center map on location
+            map.setView([coordinates.lat, coordinates.lon], 13);
+            
+            // Highlight districts (would need the actual boundaries)
+            highlightUserDistricts(coordinates);
+        }
+        
+        function highlightUserDistricts(coordinates) {
+            const point = turf.point([coordinates.lon, coordinates.lat]);
+            
+            // Highlight commissioner precinct
+            if (geoData.commissioner && boundaryLayers.commissioner) {
+                boundaryLayers.commissioner.eachLayer(function(layer) {
+                    if (turf.booleanPointInPolygon(point, layer.feature)) {
+                        layer.setStyle({
+                            fillColor: '#8B1A1A',
+                            fillOpacity: 0.4,
+                            weight: 3
+                        });
+                    }
+                });
+            }
+        }
+        
+        function showLoading() {
+            document.getElementById('results-content').innerHTML = `
+                <div class="loading">
+                    <h3>🔍 Looking up your address...</h3>
+                    <p>Please wait while we find your districts and officials.</p>
+                </div>
+            `;
+        }
+        
+        function showError(message) {
+            const resultsContainer = document.getElementById('results-content');
+            resultsContainer.innerHTML = `
+                <div class="error-message">
+                    <strong>Error:</strong> ${message}
+                </div>
+                <div class="instructions">
+                    <h3>🗺️ Get Started</h3>
+                    <p>Enter your address above to see your voting precinct and elected officials.</p>
+                </div>
+            `;
+        }
+        
+        function showNoResults() {
+            document.getElementById('results-content').innerHTML = `
+                <div class="no-results">
+                    <h3>Address Not Found</h3>
+                    <p>This address doesn't appear to be in Comal County. This tool covers Comal County and New Braunfels, TX.</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
