@@ -1,5 +1,37 @@
 [
   {
+    "id": "pf-1771455683022-city-council-to-decide-on-controversial-38-acre-housing-proj",
+    "date": "2026-02-18T23:01:23",
+    "title": "City Council to Decide on Controversial 38-Acre Housing Project",
+    "summary": "New Braunfels City Council faces decision on controversial zoning change for 131-home development by KB Homes. Residents raise concerns about increased traffic, ongoing water/sewer issues, and loss of Hill Country green space in rapidly developing area.",
+    "source": "KSAT",
+    "sourceUrl": "https://www.ksat.com/news/local/2026/02/18/new-braunfels-city-council-to-decide-on-controversial-zoning-change-for-proposed-housing-project/",
+    "category": "city-council",
+    "tags": [
+      "zoning",
+      "development",
+      "kb-homes",
+      "city-council",
+      "traffic",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "pf-1771441051288-new-braunfels-adds-license-plate-recognition-cameras",
+    "date": "2026-02-18T18:57:31",
+    "title": "New Braunfels Adds License Plate Recognition Cameras",
+    "summary": "New Braunfels has installed Flock license plate recognition cameras to enhance public safety, according to a Herald-Zeitung report. Community discussion on Nextdoor reflects concerns about surveillance and privacy.",
+    "source": "Herald-Zeitung",
+    "sourceUrl": "https://herald-zeitung.com/news/new-braunfels-adds-flock-license-plate-recognition-cameras-enhancing-public-safety/article_22e63",
+    "category": "public-safety",
+    "tags": [
+      "surveillance",
+      "public-safety",
+      "technology",
+      "new-braunfels"
+    ]
+  },
+  {
     "id": "pf-1771369320367-next-chapter-56m-southeast-library-looks-to-fill-gap-as-popu",
     "date": "2026-02-17T23:02:00",
     "title": "Next chapter: .56M Southeast Library looks to fill gap as population continues to grow in New Braunfels",
