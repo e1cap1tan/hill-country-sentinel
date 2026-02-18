@@ -291,10 +291,10 @@
     <section class="hero">
         <div style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
             <h1>Find My Officials</h1>
-            <p>Enter your Comal County address to discover which voting precinct you're in and who represents you at every level of government.</p>
+            <p>Just enter your street address — we'll handle the rest and show which voting precinct you're in and who represents you at every level of government.</p>
             
             <div class="address-search">
-                <input type="text" id="address-input" placeholder="Enter your Comal County address..." />
+                <input type="text" id="address-input" placeholder="Enter your street address..." />
                 <button type="button" id="lookup-btn">Look Up</button>
             </div>
         </div>
@@ -515,9 +515,21 @@
         
         async function geocodeAddress(address) {
             try {
-                const encodedAddress = encodeURIComponent(address);
-                // ArcGIS World Geocoder — CORS-enabled, designed for browser use
-                const url = `https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=${encodedAddress}&outFields=*&f=json`;
+                // Smart address enhancement: auto-append local context if missing
+                let queryAddress = address.trim();
+                
+                // Check if address already contains location context
+                const hasLocationContext = /(?:TX|Texas|New Braunfels|\d{5}(-\d{4})?)/i.test(address);
+                
+                if (!hasLocationContext) {
+                    // Append New Braunfels context for local bias
+                    queryAddress += ', New Braunfels, TX 78130';
+                }
+                
+                const encodedAddress = encodeURIComponent(queryAddress);
+                
+                // ArcGIS World Geocoder with location bias for Comal County area
+                const url = `https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=${encodedAddress}&location=-98.13,29.70&searchExtent=-98.87,29.50,-97.90,30.25&magicKey=&outFields=*&f=json`;
                 
                 const response = await fetch(url);
                 const data = await response.json();
