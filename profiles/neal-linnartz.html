@@ -57,9 +57,39 @@
             <a href="https://www.newbraunfels.gov/298/City-Council" target="_blank" rel="noopener">City of New Braunfels — Official Website</a>
         </div>
         <div class="section">
-            <h2>Voting Record &amp; Positions</h2>
-            <p class="placeholder">Voting record and policy positions coming soon.</p>
+            <h2>Voting Record</h2>
+            <p style="font-size:13px;color:#666;margin-bottom:16px;">
+                Source: City of New Braunfels official meeting minutes (newbraunfels.legistar.com) &middot; Last 12 months
+            </p>
+            <div id="voting-record-list"><!-- populated by script below --></div>
         </div>
+        <script>
+        (function() {
+            var slug = document.body.getAttribute('data-candidate-slug');
+            fetch('../data/voting-records.json')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var votes = data[slug] || [];
+                    var container = document.getElementById('voting-record-list');
+                    if (!votes.length) {
+                        container.innerHTML = '<p style="color:#666;font-style:italic;">No voting record available for this period.</p>';
+                        return;
+                    }
+                    container.innerHTML = votes.map(function(v) {
+                        var color = v.vote === 'Yea' ? '#2d7d46' : v.vote === 'Nay' ? '#b22234' : '#888';
+                        return '<div style="padding:14px;border:1px solid #ddd;border-radius:8px;margin-bottom:10px;background:#faf8f3">' +
+                            '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">' +
+                            '<div>' +
+                            '<div style="font-weight:600;color:#1a2744;margin-bottom:4px">' + v.itemTitle + '</div>' +
+                            '<div style="font-size:13px;color:#333;margin-bottom:4px">' + v.summary + '</div>' +
+                            '<div style="font-size:12px;color:#666">' + v.date + ' &middot; ' + v.outcome + '</div>' +
+                            '</div>' +
+                            '<div style="flex-shrink:0;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;background:' + color + ';color:white">' + v.vote + '</div>' +
+                            '</div></div>';
+                    }).join('');
+                });
+        })();
+        </script>
         <div class="section">
             <h2>Recent Activity</h2>
             <div id="candidate-activity">
