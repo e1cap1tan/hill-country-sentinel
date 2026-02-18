@@ -7,10 +7,10 @@
     "4": {"name": "Jen Crownover", "party": "R", "election": "May 2026"}
   },
   "jp": {
-    "1": {"name": "Race ongoing - 4 candidates", "party": null, "election": "Mar 2026"},
-    "2": {"name": "[TBD - research needed]", "party": "R", "election": "May 2026"},
-    "3": {"name": "[TBD - research needed]", "party": "R", "election": null},
-    "4": {"name": "[TBD - research needed]", "party": "R", "election": "May 2026"}
+    "1": {"name": "Tom Clark", "party": "R", "election": "Mar 2026"},
+    "2": {"name": "James \"Rick\" Walker", "party": "R", "election": "May 2026"},
+    "3": {"name": "Mark Long (interim)", "party": "R", "election": "Mar 2026"},
+    "4": {"name": "Ashley Rae Evans", "party": "R", "election": "Mar 2026"}
   },
   "cityCouncil": {
     "1": {"name": "Toni Carter", "party": null, "election": null},

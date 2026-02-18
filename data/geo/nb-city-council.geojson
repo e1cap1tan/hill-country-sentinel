@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Braunfels City Limits",
+        "note": "Approximate boundaries - detailed council districts require city GIS data"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-98.200, 29.650],
+          [-98.200, 29.750],
+          [-98.050, 29.750],
+          [-98.050, 29.650],
+          [-98.200, 29.650]
+        ]]
+      }
+    }
+  ]
+}

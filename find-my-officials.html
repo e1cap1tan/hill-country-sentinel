@@ -393,7 +393,8 @@
         async function loadGeoData() {
             const datasets = [
                 { key: 'commissioner', url: 'data/geo/commissioner-precincts.geojson' },
-                { key: 'voting', url: 'data/geo/voting-precincts.geojson' }
+                { key: 'voting', url: 'data/geo/voting-precincts.geojson' },
+                { key: 'nbCityCouncil', url: 'data/geo/nb-city-council.geojson' }
             ];
             
             for (const dataset of datasets) {
@@ -451,6 +452,24 @@
                         if (feature.properties) {
                             const precinct = feature.properties.Precinct || feature.properties.NAME;
                             layer.bindPopup(`Voting Precinct ${precinct}`);
+                        }
+                    }
+                }).addTo(map);
+            }
+            
+            // Render NB city council boundaries (light blue)
+            if (geoData.nbCityCouncil) {
+                boundaryLayers.nbCityCouncil = L.geoJSON(geoData.nbCityCouncil, {
+                    style: {
+                        fillColor: '#4A90E2',
+                        weight: 2,
+                        opacity: 0.8,
+                        color: '#4A90E2',
+                        fillOpacity: 0.1
+                    },
+                    onEachFeature: function(feature, layer) {
+                        if (feature.properties) {
+                            layer.bindPopup('New Braunfels City Limits');
                         }
                     }
                 }).addTo(map);
@@ -539,6 +558,16 @@
                 }
             }
             
+            // Check if within NB city limits
+            if (geoData.nbCityCouncil) {
+                for (const feature of geoData.nbCityCouncil.features) {
+                    if (turf.booleanPointInPolygon(point, feature)) {
+                        results.nbCityCouncil = true;
+                        break;
+                    }
+                }
+            }
+            
             // For now, hardcode some districts for Comal County area
             // In a full implementation, you'd check against the actual boundary data
             results.stateHouse = coordinates.lat > 29.8 ? '73' : '45';
@@ -572,6 +601,12 @@
                     official.name, official.party, official.election, null);
             }
             
+            // New Braunfels City Council
+            if (districts.nbCityCouncil) {
+                html += createDistrictCard('🏛️', 'New Braunfels City Council', 
+                    'District mapping in progress - check city website', null, null, 'https://www.newbraunfels.gov/298/City-Council');
+            }
+            
             // State House
             if (districts.stateHouse && officials.stateHouse[districts.stateHouse]) {
                 const official = officials.stateHouse[districts.stateHouse];
@@ -591,6 +626,13 @@
                 const official = officials.congressional[districts.congressional];
                 html += createDistrictCard('🇺🇸', `Congressional District ${districts.congressional}`, 
                     official.name, official.party, null, null);
+            }
+            
+            // Justice of the Peace (determine precinct based on commissioner precinct as proxy)
+            if (districts.commissioner && officials.jp[districts.commissioner]) {
+                const official = officials.jp[districts.commissioner];
+                html += createDistrictCard('⚖️', `Justice of the Peace Precinct ${districts.commissioner}`, 
+                    official.name, official.party, official.election, null);
             }
             
             resultsContainer.innerHTML = html;
