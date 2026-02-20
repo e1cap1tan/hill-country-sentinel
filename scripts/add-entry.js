@@ -4,6 +4,8 @@
 const fs = require('fs');
 const path = require('path');
 
+// TARGET CONTENT LENGTH: Keep article summaries concise - approximately 150-250 words for standard articles.
+
 // --- Feed configuration ---
 const FEED_CONFIG = {
   candidate: { file: 'data/candidate-news.json', prefix: 'cn' },
@@ -51,6 +53,16 @@ function validateEntry(entry, feedName) {
 
   if (typeof entry.sourceUrl === 'string' && !entry.sourceUrl.match(/^https?:\/\//)) {
     return { valid: false, error: 'sourceUrl must start with http:// or https://' };
+  }
+
+  // Reject social media URLs
+  const socialMediaDomains = ['nextdoor.com', 'facebook.com', 'twitter.com', 'x.com', 'instagram.com'];
+  if (typeof entry.sourceUrl === 'string') {
+    for (const domain of socialMediaDomains) {
+      if (entry.sourceUrl.toLowerCase().includes(domain)) {
+        return { valid: false, error: `Social media URLs are not allowed. Found ${domain} in sourceUrl.` };
+      }
+    }
   }
 
   const validCats = VALID_CATEGORIES[feedName];
