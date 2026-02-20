@@ -98,6 +98,49 @@ function getFallbackThumbnail(entry) {
 }
 
 /**
+ * Inject NewsArticle structured data for a feed entry
+ * @param {object} entry - Feed entry object
+ */
+function injectNewsArticleSchema(entry) {
+    if (!entry.title || !entry.date) return;
+    
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": entry.title,
+        "datePublished": entry.date,
+        "dateModified": entry.date,
+        "description": entry.summary || entry.title,
+        "publisher": {
+            "@type": "NewsMediaOrganization",
+            "name": "Hill Country Sentinel",
+            "url": "https://e1cap1tan.github.io/hill-country-sentinel/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": entry.sourceUrl || window.location.href
+        }
+    };
+    
+    // Add image if available
+    if (entry.image) {
+        const isAbsolute = entry.image.startsWith('http://') || entry.image.startsWith('https://');
+        schema.image = isAbsolute ? entry.image : `https://e1cap1tan.github.io/hill-country-sentinel/${entry.image}`;
+    }
+    
+    // Add category/section if available
+    if (entry.category) {
+        schema.articleSection = formatCategory(entry.category);
+    }
+    
+    // Create and append script tag
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+}
+
+/**
  * Render a single feed card as an HTML string.
  * @param {object} entry - Feed entry object
  * @returns {string} HTML string for the feed card
@@ -169,7 +212,11 @@ function renderFeedCard(entry) {
  */
 function renderFeedList(entries, containerEl) {
     const sorted = sortEntriesByDate(entries);
-    const html = sorted.map(entry => renderFeedCard(entry)).join('\n');
+    const html = sorted.map(entry => {
+        // Inject NewsArticle structured data for each entry
+        injectNewsArticleSchema(entry);
+        return renderFeedCard(entry);
+    }).join('\n');
     if (containerEl && typeof containerEl === 'object' && 'innerHTML' in containerEl) {
         containerEl.innerHTML = html;
     }
@@ -189,7 +236,11 @@ function renderFeedPreview(entries, containerEl, limit, viewAllUrl) {
     viewAllUrl = viewAllUrl || '#';
     const sorted = sortEntriesByDate(entries);
     const limited = sorted.slice(0, limit);
-    const cardsHtml = limited.map(entry => renderFeedCard(entry)).join('\n');
+    const cardsHtml = limited.map(entry => {
+        // Inject NewsArticle structured data for each entry
+        injectNewsArticleSchema(entry);
+        return renderFeedCard(entry);
+    }).join('\n');
     const viewAllHtml = `<a href="${escapeHtml(viewAllUrl)}" class="view-all">View All →</a>`;
     const html = cardsHtml + '\n' + viewAllHtml;
     if (containerEl && typeof containerEl === 'object' && 'innerHTML' in containerEl) {
