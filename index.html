@@ -1384,8 +1384,10 @@
                 buildGroup('State &amp; Federal', stateRows);
         }
 
-        // Load unified news feed
-        loadUnifiedNews();
+        // Load unified news feed (must wait for DOMContentLoaded so defer scripts are ready)
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUnifiedNews();
+        });
 
         // Initialize auto-linking for candidate names
         document.addEventListener('DOMContentLoaded', function() {
