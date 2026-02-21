@@ -322,6 +322,51 @@
             flex-shrink: 0;
         }
 
+        /* ── Ballot Measures Section ── */
+        .ballot-measures-container {
+            margin-bottom: 48px;
+        }
+
+        .ballot-measures-notice {
+            margin-bottom: 20px;
+        }
+
+        .ballot-no-measures {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: var(--cream-dark);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--gold);
+            border-radius: 8px;
+            padding: 18px 20px;
+        }
+
+        .ballot-no-measures-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .ballot-no-measures strong {
+            display: block;
+            font-size: 15px;
+            color: var(--navy-dark);
+            margin-bottom: 6px;
+        }
+
+        .ballot-no-measures p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        .ballot-measure-card {
+            display: flex;
+            flex-direction: column;
+        }
+
         /* ── Unified News Feed Layout ── */
         .news-section {
             margin-bottom: 48px;
@@ -812,6 +857,59 @@
                             </a>
                             <div class="candidate-chip">TBA (Democratic nominee)</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── BALLOT MEASURES SECTION ── -->
+        <div class="star-divider">★ ★ ★</div>
+        <div class="section-header">
+            <h2>🗒️ Ballot Measures</h2>
+            <p>Propositions, bond measures &amp; charter amendments on local ballots</p>
+        </div>
+
+        <div class="ballot-measures-container">
+            <!-- May 2, 2026 -->
+            <div class="election-date-section">
+                <div class="election-date-header">
+                    <h3>🏛️ May 2, 2026 — Municipal Election</h3>
+                </div>
+                <div class="ballot-measures-notice">
+                    <div class="ballot-no-measures">
+                        <span class="ballot-no-measures-icon">✅</span>
+                        <div>
+                            <strong>No ballot propositions this cycle.</strong>
+                            <p>The May 2, 2026 New Braunfels General Election contains only candidate races. No bond measures, charter amendments, or ballot propositions were filed by the deadline for this election. The previous city bond election was May 2023 ($140M approved; no tax rate increase). New Braunfels ISD last held a bond election in May 2024.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future / Context -->
+            <div class="election-date-section">
+                <div class="election-date-header">
+                    <h3>📋 About Ballot Measures in Comal County</h3>
+                </div>
+                <div class="races-grid">
+                    <div class="compact-race ballot-measure-card">
+                        <h4>How Ballot Measures Work Locally</h4>
+                        <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">
+                            Texas cities, school districts, and counties can place bond measures or charter amendments on uniform election dates (May or November). Comal County typically uses November elections for county-level propositions. Watch this section for any future ballot items as they are officially ordered by local governing bodies.
+                        </p>
+                    </div>
+                    <div class="compact-race ballot-measure-card">
+                        <h4>2023 New Braunfels Bond — Passed</h4>
+                        <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">
+                            May 2023 voters approved $140M across three propositions: <strong>Prop A</strong> Parks &amp; Recreation ($32.9M), <strong>Prop B</strong> Streets &amp; Transportation ($78.6M), <strong>Prop C</strong> Library Services ($28.6M). No projected tax rate increase. Implementation is ongoing through 2026–2027.
+                        </p>
+                        <a href="https://newbraunfels.gov/3561/2023-Bond-Election" target="_blank" rel="noopener" style="font-size:12px;color:var(--red);margin-top:8px;display:inline-block;">View bond project status →</a>
+                    </div>
+                    <div class="compact-race ballot-measure-card">
+                        <h4>Stay Informed</h4>
+                        <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">
+                            The Sentinel monitors city council agendas, school board meetings, and county commissioners court for any new ballot measure proposals. When a proposition is officially ordered, it will appear here with full coverage — what it does, who supports it, what it costs, and what voting yes or no means.
+                        </p>
                     </div>
                 </div>
             </div>
