@@ -60,6 +60,11 @@ async function generateArticleImage(slug, title, tags) {
         const imagePath = path.join(__dirname, '..', 'articles', 'images', `${slug}.png`);
         const imageGeneratorPath = path.join(__dirname, '..', '..', '..', 'tools', 'gemini-image', 'generate.sh');
 
+        if (fs.existsSync(imagePath)) {
+            console.log('Using existing image:', imagePath);
+            return `images/${slug}.png`;
+        }
+
         // Ensure images directory exists
         const imagesDir = path.join(__dirname, '..', 'articles', 'images');
         if (!fs.existsSync(imagesDir)) {
