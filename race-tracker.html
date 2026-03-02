@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Tracker — Hill Country Sentinel</title>
+    <meta name="description" content="Track every race in New Braunfels and Comal County. Live ratings, candidate assessments, and prediction market odds.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css?v=16">
+    <style>
+        .tracker-hero {
+            background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+            color: white;
+            padding: 48px 24px 40px;
+            text-align: center;
+            border-bottom: 4px solid var(--red);
+        }
+        .tracker-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .tracker-hero p {
+            font-size: 18px;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .tracker-updated {
+            text-align: center;
+            padding: 12px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Race Cards */
+        .races-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        .race-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--navy);
+            border-bottom: 3px solid var(--red);
+            padding-bottom: 8px;
+            margin: 32px 0 16px;
+        }
+        .race-card {
+            background: var(--content-bg);
+            border: 1px solid var(--content-border);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .race-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--content-border);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .race-office {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .race-election-date {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .race-countdown {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--red);
+        }
+
+        /* Rating Badges */
+        .rating-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .rating-safe-r { background: #991B1B; color: white; }
+        .rating-likely-r { background: #DC2626; color: white; }
+        .rating-lean-r { background: #F87171; color: white; }
+        .rating-toss-up { background: var(--gold); color: white; }
+        .rating-lean-d { background: #60A5FA; color: white; }
+        .rating-likely-d { background: #2563EB; color: white; }
+        .rating-safe-d { background: #1E40AF; color: white; }
+        .rating-solid-incumbent { background: #166534; color: white; }
+        .rating-lean-incumbent { background: #22C55E; color: white; }
+        .rating-lean-challenger { background: var(--gold); color: white; }
+
+        /* Candidates */
+        .race-candidates {
+            padding: 16px 20px;
+        }
+        .candidate-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+            gap: 12px;
+        }
+        .candidate-row:last-child { border-bottom: none; }
+        .candidate-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--content-text);
+        }
+        .candidate-name a {
+            color: var(--navy);
+            text-decoration: none;
+        }
+        .candidate-name a:hover { text-decoration: underline; }
+        .candidate-incumbent {
+            display: inline-block;
+            background: var(--navy);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+        .candidate-party {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .candidate-party-r { background: #FEE2E2; color: #991B1B; }
+        .candidate-party-d { background: #DBEAFE; color: #1E40AF; }
+        .candidate-factors {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+        .candidate-endorsements {
+            font-size: 12px;
+            color: var(--sepia);
+        }
+
+        /* Analysis */
+        .race-analysis {
+            padding: 12px 20px 16px;
+            background: var(--cream);
+            border-top: 1px solid var(--content-border);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .race-analysis strong { color: var(--navy); }
+
+        /* Prediction Market Widget */
+        .pm-widget {
+            margin: 12px 20px 16px;
+            padding: 12px 16px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+        }
+        .pm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .pm-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .pm-source {
+            font-size: 12px;
+            color: var(--sepia);
+            text-decoration: none;
+        }
+        .pm-source:hover { text-decoration: underline; }
+        .pm-bar-container { margin: 8px 0; }
+        .pm-bar {
+            display: flex;
+            height: 28px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #E5E7EB;
+        }
+        .pm-bar-r {
+            background: linear-gradient(135deg, #DC2626, #991B1B);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+        }
+        .pm-bar-d {
+            background: linear-gradient(135deg, #2563EB, #1E40AF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+        }
+        .pm-bar-label {
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .pm-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+        .pm-loading, .pm-unavailable {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 8px;
+            text-align: center;
+        }
+
+        /* Methodology Note */
+        .methodology {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            padding: 20px 24px;
+            background: var(--cream-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .methodology h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .methodology ul {
+            margin: 8px 0 0 20px;
+        }
+        .methodology li {
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .tracker-hero h1 { font-size: 28px; }
+            .race-card-header { flex-direction: column; align-items: flex-start; }
+            .candidate-row { flex-wrap: wrap; }
+            .candidate-factors { margin-left: 0; margin-top: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="layout-header"></div>
+
+    <div class="tracker-hero">
+        <h1>Race Tracker</h1>
+        <p>Every race that matters in New Braunfels and Comal County — rated, analyzed, and updated as new information comes in.</p>
+    </div>
+
+    <div class="tracker-updated" id="last-updated"></div>
+    <div class="races-container" id="races-container">
+        <p style="text-align:center; color: var(--text-muted);">Loading race assessments...</p>
+    </div>
+
+    <div class="methodology">
+        <h3>How We Rate Races</h3>
+        <p>Our assessments are based on publicly available information and transparent criteria:</p>
+        <ul>
+            <li><strong>Incumbency</strong> — Incumbents win 80-90% of local races nationally</li>
+            <li><strong>Endorsements</strong> — Key organizational backing (Chamber, party officials, PACs)</li>
+            <li><strong>Campaign Finance</strong> — Money raised and donor count (when filings are available)</li>
+            <li><strong>Historical Patterns</strong> — Past results in the same district/seat</li>
+            <li><strong>Campaign Activity</strong> — Town halls, grassroots engagement, media presence</li>
+            <li><strong>Prediction Markets</strong> — Live betting odds from Polymarket where available</li>
+        </ul>
+        <p style="margin-top: 12px; font-style: italic; color: var(--text-muted);">
+            These are informed assessments, not predictions. Local races are inherently volatile — a single event can shift the outcome. We present the evidence and let you decide.
+        </p>
+    </div>
+
+    <div id="layout-footer"></div>
+
+    <script src="js/layout.js?v=16"></script>
+    <script src="js/prediction-markets.js?v=16"></script>
+    <script>
+        const base = typeof getBase === 'function' ? getBase() : '';
+
+        function daysUntil(dateStr) {
+            const target = new Date(dateStr + 'T00:00:00');
+            const now = new Date();
+            const diff = target - now;
+            return Math.ceil(diff / (1000 * 60 * 60 * 24));
+        }
+
+        function getRatingClass(rating) {
+            return 'rating-' + rating;
+        }
+
+        function getRatingLabel(rating, scale) {
+            return scale[rating] || rating.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        function renderCandidate(c) {
+            const nameLink = c.profileSlug
+                ? `<a href="${base}profiles/${c.profileSlug}.html">${c.name}</a>`
+                : c.name;
+            const incumbent = c.incumbent ? '<span class="candidate-incumbent">Incumbent</span>' : '';
+            const party = c.party
+                ? `<span class="candidate-party candidate-party-${c.party.toLowerCase()}">${c.party}</span>`
+                : '';
+            const endorsements = c.factors && c.factors.endorsements && c.factors.endorsements.length
+                ? `<span class="candidate-endorsements">✓ ${c.factors.endorsements.join(', ')}</span>`
+                : '';
+            const notes = c.factors && c.factors.notes
+                ? `<span class="candidate-factors">${c.factors.notes}</span>`
+                : '';
+
+            return `
+                <div class="candidate-row">
+                    ${party}
+                    <span class="candidate-name">${nameLink}${incumbent}</span>
+                    ${endorsements}
+                </div>
+            `;
+        }
+
+        function renderRace(race, scale) {
+            const days = daysUntil(race.election);
+            const countdownText = days > 0 ? `${days} days away` : days === 0 ? 'TODAY' : 'Completed';
+            const countdownClass = days <= 7 && days >= 0 ? 'style="color: var(--red); font-weight: 700;"' : '';
+
+            const candidatesHtml = race.candidates.map(renderCandidate).join('');
+
+            const pmId = race.predictionMarket ? `pm-${race.id}` : '';
+            const pmHtml = race.predictionMarket ? `<div id="${pmId}"></div>` : '';
+
+            return `
+                <div class="race-card">
+                    <div class="race-card-header">
+                        <div>
+                            <div class="race-office">${race.office}</div>
+                            <div class="race-election-date">${race.election} <span class="race-countdown" ${countdownClass}>· ${countdownText}</span></div>
+                        </div>
+                        <span class="rating-badge ${getRatingClass(race.rating)}">${getRatingLabel(race.rating, scale)}</span>
+                    </div>
+                    <div class="race-candidates">
+                        ${candidatesHtml}
+                    </div>
+                    ${pmHtml}
+                    <div class="race-analysis">
+                        <strong>Analysis:</strong> ${race.analysis}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load and render
+        fetch(base + 'data/race-assessments.json?v=16')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('races-container');
+                document.getElementById('last-updated').textContent = `Last updated: ${new Date(data.updated + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+                // Group races by type
+                const upcoming = data.races.filter(r => {
+                    const d = daysUntil(r.election);
+                    return d >= 0;
+                }).sort((a, b) => new Date(a.election) - new Date(b.election));
+
+                const past = data.races.filter(r => daysUntil(r.election) < 0);
+
+                let html = '';
+                if (upcoming.length) {
+                    html += '<h2 class="race-section-title">Upcoming Elections</h2>';
+                    html += upcoming.map(r => renderRace(r, data.ratingScale)).join('');
+                }
+                if (past.length) {
+                    html += '<h2 class="race-section-title">Past Elections</h2>';
+                    html += past.map(r => renderRace(r, data.ratingScale)).join('');
+                }
+
+                container.innerHTML = html;
+
+                // Render prediction market widgets
+                data.races.forEach(race => {
+                    if (race.predictionMarket && race.predictionMarket.source === 'polymarket') {
+                        PredictionMarkets.renderOddsWidget(`pm-${race.id}`, 'texas-senate');
+                    }
+                });
+            })
+            .catch(err => {
+                console.error('Failed to load race assessments:', err);
+                document.getElementById('races-container').innerHTML = '<p style="text-align:center; color: var(--red);">Error loading race data. Please refresh.</p>';
+            });
+    </script>
+</body>
+</html>

@@ -28,6 +28,7 @@
         { label: 'News', href: 'feeds/news.html' },
         { label: 'Races', href: 'feeds/candidates.html' },
         { label: 'Business Watch', href: 'feeds/business.html' },
+        { label: 'Race Tracker', href: 'race-tracker.html' },
         { label: 'Find My Officials', href: 'find-my-officials.html' }
     ];
 

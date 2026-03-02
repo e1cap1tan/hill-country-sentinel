@@ -1,0 +1,246 @@
+{
+  "updated": "2026-03-01",
+  "ratingScale": {
+    "safe-r": "Safe Republican",
+    "likely-r": "Likely Republican",
+    "lean-r": "Lean Republican",
+    "toss-up": "Toss-Up",
+    "lean-d": "Lean Democrat",
+    "likely-d": "Likely Democrat",
+    "safe-d": "Safe Democrat",
+    "solid-incumbent": "Solid Incumbent",
+    "lean-incumbent": "Lean Incumbent",
+    "lean-challenger": "Lean Challenger"
+  },
+  "races": [
+    {
+      "id": "mayor-2026",
+      "office": "Mayor of New Braunfels",
+      "election": "May 2, 2026",
+      "type": "general",
+      "partisan": false,
+      "rating": "lean-incumbent",
+      "candidates": [
+        {
+          "name": "Neal Linnartz",
+          "incumbent": true,
+          "profileSlug": "neal-linnartz",
+          "factors": {
+            "incumbency": true,
+            "endorsements": ["NB Chamber of Commerce"],
+            "fundraising": null,
+            "notes": "Incumbent mayor seeking re-election. Chamber endorsement is significant in NB races."
+          }
+        },
+        {
+          "name": "Michael French",
+          "incumbent": false,
+          "profileSlug": "michael-french",
+          "factors": {
+            "incumbency": false,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Most active challenger. Hosted town hall with 45 attendees — strong grassroots signal for a local race."
+          }
+        },
+        {
+          "name": "Angela Allen",
+          "incumbent": false,
+          "profileSlug": "angela-allen",
+          "factors": {
+            "incumbency": false,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Challenger. Mosque controversy with Mesaros added visibility to campaign."
+          }
+        },
+        {
+          "name": "Jonathon Frazier",
+          "incumbent": false,
+          "profileSlug": "jonathon-frazier",
+          "factors": {
+            "incumbency": false,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Late entrant to the race."
+          }
+        }
+      ],
+      "predictionMarket": null,
+      "analysis": "Four-way race with incumbent Linnartz holding the advantage of name recognition and Chamber backing. However, a crowded field could split the anti-incumbent vote or force a runoff. French has shown the most grassroots energy among challengers. Low municipal turnout (typically under 15%) makes this volatile. Rating: Lean Incumbent."
+    },
+    {
+      "id": "council-d5-2026",
+      "office": "City Council District 5",
+      "election": "May 2, 2026",
+      "type": "general",
+      "partisan": false,
+      "rating": "toss-up",
+      "candidates": [
+        {
+          "name": "Mary Ann Labowski",
+          "incumbent": true,
+          "profileSlug": "mary-ann-labowski",
+          "factors": {
+            "incumbency": true,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Incumbent seeking re-election."
+          }
+        }
+      ],
+      "predictionMarket": null,
+      "analysis": "Incumbent Labowski is on the ballot. Check for filed challengers — if unopposed, this is Safe Incumbent. Rating will be updated as candidate filings are confirmed."
+    },
+    {
+      "id": "council-d6-2026",
+      "office": "City Council District 6",
+      "election": "May 2, 2026",
+      "type": "general",
+      "partisan": false,
+      "rating": "toss-up",
+      "candidates": [
+        {
+          "name": "April Ryan",
+          "incumbent": true,
+          "profileSlug": "april-ryan",
+          "factors": {
+            "incumbency": true,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Incumbent seeking re-election."
+          }
+        }
+      ],
+      "predictionMarket": null,
+      "analysis": "Incumbent Ryan is on the ballot. Check for filed challengers. Rating will be updated as candidate filings are confirmed."
+    },
+    {
+      "id": "commissioner-pct2-2026",
+      "office": "Comal County Commissioner Pct. 2",
+      "election": "March 3, 2026 (R Primary)",
+      "type": "primary",
+      "partisan": true,
+      "rating": "toss-up",
+      "candidates": [
+        {
+          "name": "Scott Haag",
+          "incumbent": true,
+          "profileSlug": "scott-haag",
+          "party": "R",
+          "factors": {
+            "incumbency": true,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Incumbent commissioner facing primary challenge."
+          }
+        },
+        {
+          "name": "Garrison Maurer",
+          "incumbent": false,
+          "profileSlug": "garrison-maurer",
+          "party": "R",
+          "factors": {
+            "incumbency": false,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Primary challenger."
+          }
+        },
+        {
+          "name": "Kayne Parrish",
+          "incumbent": false,
+          "profileSlug": "kayne-parrish",
+          "party": "R",
+          "factors": {
+            "incumbency": false,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Primary challenger."
+          }
+        }
+      ],
+      "predictionMarket": null,
+      "analysis": "Three-way Republican primary just 2 days away (March 3). Incumbent Haag faces two challengers in what has been one of the most closely watched local races. If no candidate gets a majority, a runoff is required. This is genuinely a toss-up."
+    },
+    {
+      "id": "commissioner-pct4-2026",
+      "office": "Comal County Commissioner Pct. 4",
+      "election": "March 3, 2026 (R Primary)",
+      "type": "primary",
+      "partisan": true,
+      "rating": "lean-incumbent",
+      "candidates": [
+        {
+          "name": "Jen Crownover",
+          "incumbent": true,
+          "profileSlug": "jen-crownover",
+          "party": "R",
+          "factors": {
+            "incumbency": true,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Incumbent commissioner, elected TAC vice president — statewide recognition."
+          }
+        }
+      ],
+      "predictionMarket": null,
+      "analysis": "Incumbent Crownover has statewide visibility through TAC leadership. Check for primary challengers. Rating assumes incumbency advantage."
+    },
+    {
+      "id": "tx-senate-25-2026",
+      "office": "Texas Senate District 25",
+      "election": "November 3, 2026",
+      "type": "general",
+      "partisan": true,
+      "rating": "safe-r",
+      "candidates": [
+        {
+          "name": "Donna Campbell",
+          "incumbent": true,
+          "profileSlug": "donna-campbell",
+          "party": "R",
+          "factors": {
+            "incumbency": true,
+            "endorsements": [],
+            "fundraising": null,
+            "notes": "Long-serving incumbent in heavily Republican district."
+          }
+        }
+      ],
+      "predictionMarket": {
+        "source": "polymarket",
+        "market": "Texas Senate Election Winner (statewide)",
+        "url": "https://polymarket.com/event/texas-senate-election-winner",
+        "partyOdds": { "republican": 67.0, "democrat": 31.5 },
+        "note": "Statewide odds — SD-25 is significantly more Republican than Texas overall.",
+        "lastUpdated": "2026-03-01"
+      },
+      "analysis": "SD-25 is one of the most conservative state senate districts in Texas. Campbell has held the seat since 2013. The statewide Polymarket odds show Republicans at 67% for the US Senate race — Campbell's district is far more Republican than the state average. Safe R unless a major scandal changes the landscape."
+    },
+    {
+      "id": "tx-21-2026",
+      "office": "U.S. House TX-21",
+      "election": "November 3, 2026",
+      "type": "general",
+      "partisan": true,
+      "rating": "likely-r",
+      "candidates": [
+        {
+          "name": "Chip Roy",
+          "incumbent": true,
+          "profileSlug": "chip-roy",
+          "party": "R",
+          "factors": {
+            "incumbency": true,
+            "endorsements": ["House Freedom Caucus"],
+            "fundraising": null,
+            "notes": "Well-funded incumbent, national profile through Freedom Caucus. District leans R but includes Austin suburbs."
+          }
+        }
+      ],
+      "predictionMarket": null,
+      "analysis": "TX-21 includes parts of Austin's suburbs, making it slightly more competitive than deep-red rural districts. Roy has strong fundraising and national name recognition. Likely R unless Democrats field an exceptionally strong candidate and national environment heavily favors them."
+    }
+  ]
+}
